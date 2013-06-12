@@ -1,9 +1,9 @@
 package com.acn.ezmock;
 
-import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import junit.framework.Assert;
 
 import org.easymock.EasyMock;
 import org.junit.After;
@@ -15,6 +15,8 @@ import static org.easymock.EasyMock.isA;
 public class MyBusinessTest {
 
 	private MyDAO myDAO;
+	
+	private MyBusiness myBusinessImpl;
 	
 	
 	@BeforeClass
@@ -39,24 +41,16 @@ public class MyBusinessTest {
 	public void tearDown() throws Exception {
 	}
 
+	
 	@Test
-	public void testMergeAirportByCity() {
-		List<Airport> list=new ArrayList();
-		list.add(new Airport("PVG"));
-		list.add(new Airport("SVG"));
-		list.add(new Airport("SHA"));
-		
-		EasyMock.expect(myDAO.findAirport(isA(String.class))).andReturn(list).anyTimes();
+	public void testMergeAirportByCityWithNullException() {
+		myBusinessImpl=new MyBusinessImpl();
+		EasyMock.expect(myDAO.findAirport(isA(String.class))).andThrow(new NullPointerException());
 		EasyMock.replay(myDAO);
-		
-		System.out.println(myDAO.findAirport("SVG").size());
-		System.out.println(myDAO.findAirport("SVG").size());
-		System.out.println(myDAO.findAirport("SVG").size());
-		
-		assertNotNull(myDAO.findAirport("SVG"));
-      //  assertEquals();    //veify return user
+		myBusinessImpl.setMyDAO(myDAO);
+		List list=myBusinessImpl.MergeAirportByCity();
+		Assert.assertEquals(null, list);
 		EasyMock.verify(myDAO);
-
 		
 		
 	}
