@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+	 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
+<mvc:resources mapping="/resource/**" location="/resource/" /> 
+
+<mvc:annotation-driven />
+<context:component-scan base-package="com.chamago.pcrm.**.*.web,sy.controller" annotation-config="true" /> 
+<bean class="com.chamago.pcrm.common.utils.UTF8StringBeanPostProcessor"></bean>
+<!-- 
+<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
+-->
+ <!-- <bean id="jaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+		<list>
+				<value>com.chamago.pcrm.common.pojo.App</value>
+		</list>
+			</property></bean> -->
+
+<!-- <bean id="customer" class="org.springframework.web.servlet.view.xml.MarshallingView">
+		<constructor-arg ref="jaxb2Marshaller" /></bean> -->
+   
+<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+<property name="favorParameter" value="true"/>
+<property name="mediaTypes">
+	<map>
+	<entry key="xml" value="application/xml;charset=UTF-8"/>
+	<entry key="json" value="text/plain;charset=UTF-8"/>
+	<entry key="html" value="text/html;charset=UTF-8"/></map></property>
+
+	<property name="viewResolvers">
+			<list>
+				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+			    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+			        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+			        <property name="prefix" value="/WEB-INF/jsp"/>
+			        <property name="suffix" value=".jsp"></property>
+			    </bean>
+			</list>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />	<!-- for application/json -->
+				<bean class="org.springframework.web.servlet.view.xml.MarshallingView" ><!-- for application/xml -->
+					<property name="marshaller">
+						<bean class="org.springframework.oxm.xstream.XStreamMarshaller"/>
+					</property>
+				</bean>
+			</list>
+		</property></bean> 
+<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" p:basename="messages"/>
+<bean id="multipartResolver"
+    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <!-- 设置上传文件的最大尺寸为1MB -->
+    <property name="maxUploadSize">
+        <value>10485760</value>
+    </property>
+</bean>
+
+
+
+<!-- 拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="sy.interceptors.EncodingInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="sy.interceptors.AuthInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+</beans>

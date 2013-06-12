@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ItemMapper" >
+
+<select id="findItemBySeller" parameterType="string" resultType="object[]">
+SELECT   num_iid, cid, title,props_name,num,pic_url,price,created
+FROM item 
+WHERE nick=#{seller}
+</select>
+
+<select id="findSkuByNumiidList" parameterType="list" resultType="object[]">
+SELECT sku_id,num_iid, quantity,price, properties_name FROM sku WHERE  num_iid IN
+<foreach item="numiidList" index="index" collection="list"  
+                    open="(" separator="," close=")">
+                   #{numiidList}
+            </foreach></select>
+
+<select id="findItemById" parameterType="long"  resultType="object[]"> 
+SELECT * FROM item WHERE num_iid =#{numiid}
+
+</select>
+
+<select id="findItemsDetail" resultType="com.chamago.pcrm.crm.pojo.CrmItem" >
+SELECT num_iid numIid,title,price,pic_url picUrl FROM item WHERE num_iid IN
+<foreach item="ids" index="index" collection="list"  
+                    open="(" separator="," close=")">
+                   #{ids}
+            </foreach>
+</select>
+
+</mapper> 

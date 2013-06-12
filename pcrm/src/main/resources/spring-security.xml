@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			http://www.springframework.org/schema/security 
+			http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+	<!-- Spring-Security 的配置 -->
+	<!-- 注意use-expressions=true.表示开启表达式,否则表达式将不可用.  -->
+	<security:http auto-config="true" use-expressions="true" access-denied-page="/" lowercase-comparisons="true">
+	<security:intercept-url pattern="/admin/login" access="permitAll" />
+	<security:intercept-url pattern="/*/admin/*"  filters="none"  /> 
+	<!-- <security:intercept-url pattern="/*Controller*"  filters="none"  /> -->
+	<security:intercept-url pattern="/app/update/*"  filters="none"  />
+	<security:intercept-url pattern="/loginservice/*" filters="none" />
+	<security:intercept-url pattern="/resource/**" filters="none" />
+	<security:intercept-url pattern="/pushlet*" filters="none" />
+	
+	 <security:remember-me key="userInfo"/>
+		<security:form-login login-page="/loginservice" authentication-failure-url="/loginservice/error" default-target-url="/loginservice/login" />
+		<security:logout invalidate-session="true" logout-success-url="/userservice/logout" logout-url="/userservice/logout" />
+		<!-- 增加一个自定义的filter，放在FILTER_SECURITY_INTERCEPTOR之前， 实现用户、角色、权限、资源的数据库管理。 -->
+		<!-- <security:custom-filter ref="myFilter"
+			after="LAST" /> -->
+		<security:custom-filter ref="myFilter" after="LAST" />
+	</security:http>
+
+	<!-- 配置过滤器 -->
+	<bean id="myFilter" class="com.chamago.pcrm.permission.login.web.MySecurityFilter">
+		<!-- 用户拥有的权限 -->
+		<property name="authenticationManager" ref="authenticationManager" />
+		<!-- 用户是否拥有所请求资源的权限 -->
+		<property name="accessDecisionManager" ref="myAccessDecisionManagerBean" />
+	<!-- 	资源与权限对应关系 -->
+		<property name="securityMetadataSource" ref="mySecurityMetadataSource" />
+	</bean>
+	
+
+
+	<bean id="mySecurityMetadataSource" class="com.chamago.pcrm.permission.login.web.MySecurityMetadataSource">
+		<constructor-arg name="roleService" ref="roleService"></constructor-arg>
+	</bean>
+
+
+	<!-- 配置登录验证的类 -->
+	<bean id="daoAuthenticationProvider"
+		class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<property name="userDetailsService" ref="userDetailsService" />
+	</bean>
+
+	<bean id="authenticationManager"
+		class="org.springframework.security.authentication.ProviderManager">
+		<property name="providers">
+			<list>
+				<ref local="daoAuthenticationProvider" />
+			</list>
+		</property>
+	</bean>
+	
+<!-- 	<bean id="myAccessDecisionManagerBean" class="org.springframework.security.access.vote.AffirmativeBased">   -->
+		<bean id="myAccessDecisionManagerBean" class="com.chamago.pcrm.permission.login.web.MyAccessDecisionManager"> 
+        <property name="allowIfAllAbstainDecisions" value="false"/>  
+        <property name="decisionVoters">  
+            <list>  
+                <bean class="org.springframework.security.access.vote.RoleVoter"/>  
+                <bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>  
+            </list>  
+        </property>  
+    </bean>  
+
+	<security:authentication-manager>
+		<security:authentication-provider  user-service-ref="userDetailsService">
+			<security:password-encoder ref="passwordEncoder" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+
+
+
+	<bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" id="passwordEncoder" />
+
+
+</beans>

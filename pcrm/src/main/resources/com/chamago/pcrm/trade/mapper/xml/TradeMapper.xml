@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="TradeMapper">
+
+<select id="findOrderByTidList" resultType="object[]"  parameterType="list" >
+SELECT oid,tid,num_iid,seller_nick,buyer_nick, title,price,pic_path,num,status,payment,created,sku_properties_name
+FROM trade_order 
+WHERE  tid IN 
+<foreach item="tidList" index="index" collection="list"  
+                    open="(" separator="," close=")">
+                   #{tidList}
+            </foreach>
+</select>
+
+<select id="findOrderByTid" resultType="object[]"  parameterType="string" >
+SELECT oid,tid,num_iid,seller_nick,buyer_nick, title,price,pic_path,num,status,payment,created,sku_properties_name
+FROM trade_order 
+WHERE  tid=#{tid}
+</select>	
+
+<select id="findTradeBySellerBuyer" resultType="object[]" parameterType="map">
+SELECT tid, post_fee,payment,DATE_FORMAT(created,'%Y-%m-%d %h:%i:%s') ,status,has_post_fee,seller_flag FROM trade 
+WHERE  buyer_nick=#{buyer} AND seller_nick=#{seller}
+<if test="tradeStatus != null">
+	AND  status IN  <foreach item="tradeStatus" index="index" collection="tradeStatus"  open="(" separator="," close=")">#{tradeStatus}</foreach>
+</if>
+ ORDER BY created DESC
+</select>
+
+<select id="findTradeByTids" parameterType="list" resultType="object[]">
+SELECT tid, post_fee,payment,DATE_FORMAT(created,'%Y-%m-%d %h:%i:%s') ,status,has_post_fee,seller_flag FROM trade 
+	WHERE  tid IN  <foreach item="tids" index="index" collection="list"  open="(" separator="," close=")">#{tids}</foreach>
+</select>		
+
+	
+ 
+<select id="findTradeByTid" resultType="object[]" parameterType="long">
+ SELECT tid, post_fee,payment,created,status,has_post_fee,seller_flag FROM trade
+ WHERE tid=#{tid}</select>
+ 
+<select id="findTradeAmountPerformance" resultType="object[]" parameterType="java.util.Map">
+ SELECT sum(payment),buyer_nick
+ FROM trade t  
+ WHERE  t.seller_nick = #{seller}
+         and t.created between #{startTime} and #{endTime} 
+         and t.status IN ('TRADE_FINISHED','WAIT_SELLER_SEND_GOODS','WAIT_BUYER_CONFIRM_GOODS') 
+         group by buyer_nick
+</select>
+
+<select id="findPerformanceByDate" resultType="object[]" parameterType="java.util.Map">
+ SELECT created,pay_time,payment,buyer_nick
+ FROM trade t  
+ WHERE  t.seller_nick = #{seller}
+         and( t.created between #{startTime} and #{endTime}  
+             or t.pay_time between #{startTime} and #{endTime} )
+         and t.status IN ('TRADE_FINISHED','WAIT_SELLER_SEND_GOODS','WAIT_BUYER_CONFIRM_GOODS')
+         and t.buyer_nick in
+         (
+         	SELECT distinct uid FROM eservice_chatpeers 
+			WHERE chat_id = #{nick} and date = #{curDate} 
+         )
+          
+</select>
+ 
+<select id="findRefundNum" resultType="long" parameterType="map">
+SELECT  distinct(tid)   FROM `trade_order`
+WHERE seller_nick=#{seller} AND buyer_nick=#{buyer} 
+AND  refund_status IN('WAIT_SELLER_AGREE','WAIT_BUYER_RETURN_GOODS',
+						'WAIT_SELLER_CONFIRM_GOODS','SELLER_REFUSE_BUYER')  
+</select>
+
+	
+<select id="findWaitingSendGoodsTradeId" resultType="long">
+SELECT tid FROM trade WHERE  seller_nick=#{seller} AND buyer_nick =#{buyer} 
+AND status IN ('WAIT_SELLER_SEND_GOODS')
+</select>
+
+<update id="updateSellerFlag" parameterType="map">
+	UPDATE trade SET seller_flag=#{flag} WHERE tid=#{tid}</update>
+<update id="batchUpdateSellerFlag" parameterType="map">
+	UPDATE trade SET seller_flag=#{flag} WHERE tid IN 	
+<foreach item="tids" index="index" collection="tids"  open="(" separator="," close=")">#{tids}</foreach> 
+</update>
+
+
+<update id="updateTradeStatus" parameterType="map">
+	UPDATE trade SET status=#{status} WHERE tid=#{tid}</update>
+
+<update id="updateOrderStatus" parameterType="map">
+	UPDATE trade_order SET status=#{status} WHERE tid=#{tid} </update>
+	
+<update id="updatePostage" parameterType="map">
+	UPDATE trade SET post_fee=#{postage} WHERE tid=#{tid}</update>
+		
+<update id="batchUpdateTradeStatus" parameterType="map">
+	UPDATE trade SET status=#{status} WHERE tid IN 
+	<foreach item="tids" index="index" collection="tids"   open="(" separator="," close=")">#{tids}</foreach></update>
+
+<update id="batchUpdateOrderStatus" parameterType="map">
+	UPDATE trade_order SET status=#{status} WHERE tid IN
+<foreach item="tids" index="index" collection="tids"  open="(" separator="," close=")">#{tids}</foreach> </update>
+	
+<update id="batchUpdatePostage" parameterType="map">
+	UPDATE trade SET post_fee=#{postage} WHERE tid IN 	
+<foreach item="tids" index="index" collection="tids"  open="(" separator="," close=")">
+ #{tids}</foreach> </update>
+
+<select id="findTradeAmountAndTime" resultType="object[]" parameterType="java.util.Map">
+ SELECT sum(payment),buyer_nick
+ FROM increment_trades t  
+ WHERE  t.seller_nick = #{seller}
+ 		 and t.type = 'guarantee_trade'
+         and t.modified between #{startTime} and #{endTime} 
+         and t.status IN ('TradeCreate','TradeBuyerPay','TradeSuccess') 
+         group by buyer_nick
+</select>
+	
+</mapper>
+

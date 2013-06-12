@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CustomerServiceMapper" >
+ 
+	<resultMap type="com.chamago.pcrm.customerservice.pojo.CSIStatus" id="csiStatusResultMap">
+		<result column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="yellow_light_alert_time" property="yellowLightAlertTime"/>
+		<result column="red_light_alert_time" property="redLightAlertTime"/>
+		<result column="operat_seq" property="operatSeq"/>
+	</resultMap>
+	
+	<resultMap type="com.chamago.pcrm.customerservice.pojo.CSIStatus" id="csiCustomAlertTimeResultMap">
+		<result column="status_id" property="id"/>
+		<result column="yellow_light_alert_time" property="yellowLightAlertTime"/>
+		<result column="red_light_alert_time" property="redLightAlertTime"/>
+	</resultMap>
+	
+	<resultMap type="com.chamago.pcrm.customerservice.pojo.CSICustomAlertTime" id="csiCustomAlertTimeResultMap2">
+		<result column="status_id" property="statusId"/>
+		<result column="name" property="name"/>
+		<result column="yellow_light_alert_time" property="yelloLightAlertTime"/>
+		<result column="red_light_alert_time" property="redLightAlertTime"/>
+		<result column="modify_time" property="modifyTime"/>
+	</resultMap>
+	
+	<resultMap type="com.chamago.pcrm.customerservice.pojo.CSIDetail" id="csiDetailResultMap">
+		<result column="cdid" property="id"/>
+		<result column="csiid" property="csiId"/>
+		<result column="status" property="status"/>
+		<result column="create_time" property="createTime"/>
+		<result column="light_type" property="lightType"/>
+		<result column="yellow_light_time" property="yellowLightTime"/>
+	</resultMap>
+	
+	<resultMap type="com.chamago.pcrm.customerservice.pojo.CSIType" id="csiTypeResultMap">
+		<result column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="seller_nick" property="sellerNick"/>
+		<result column="create_time" property="createTime"/>
+		<result column="count" property="count"/>
+	</resultMap>
+	
+	<resultMap type="com.chamago.pcrm.customerservice.pojo.CustomerServiceIssues" id="customerServiceIssuesResultMap">
+		<result column="id" property="id"/>
+		<result column="trade_id" property="tradeId"/>
+		<result column="tittle" property="tittle"/>
+	</resultMap>
+		
+	<select id="getCSITypeListBySellerNick" resultMap="csiTypeResultMap">
+		SELECT t.id, t.name, t.seller_nick, t.create_time, (SELECT COUNT(*) FROM customer_service_issues c WHERE c.type= t.id AND c.state=0 AND c.seller_nick=#{sellerNick}) as count FROM csi_type t WHERE t.seller_nick = #{sellerNick} AND t.state = '0'
+	</select>
+	
+	<insert id="saveCustomerServiceIssueInfo" parameterType="com.chamago.pcrm.customerservice.pojo.CustomerServiceIssues">
+		INSERT INTO customer_service_issues(id, buyer_nick, seller_nick, trade_id, type, priority, title, content, nick, file_path, status, create_time, state)
+		values(#{id}, #{buyerNick}, #{sellerNick}, #{tradeId}, #{type}, #{priority}, #{title}, #{content}, #{nick}, #{filePath}, #{status}, NOW(), '0')
+	</insert>
+	
+	<insert id="saveCSIDetailInfo" parameterType="com.chamago.pcrm.customerservice.pojo.CSIDetail">
+		INSERT INTO csi_detail(id, csi_id, nick, status, remark, file_path, create_time) 
+		VALUES(#{id}, #{csiId}, #{nick}, #{status}, #{remark}, #{filePath}, NOW())
+	</insert>
+	
+	<select id="getCustomerServiceIssueByCSIId" resultType="object[]" parameterType="string">
+		SELECT c.trade_id, t.name, c.priority, c.title, c.content, c.nick, c.file_path, (select s.name from csi_detail d  INNER JOIN csi_status s ON s.id = d.status WHERE d.csi_id = c.id order by d.create_time desc limit 0,1), c.create_time, (select light_type from csi_detail d WHERE d.csi_id = c.id order by d.create_time desc limit 0,1) as ligt_type, t.id, t.id, s.id, c.disposal_nick, (select s.id from csi_detail d  INNER JOIN csi_status s ON s.id = d.status WHERE d.csi_id = c.id order by d.create_time desc limit 0,1), c.id  
+		FROM customer_service_issues c
+		INNER JOIN csi_type t ON c.type = t.id
+		INNER JOIN csi_status s ON s.id = c.status
+		WHERE c.id = #{CSIId} AND c.state='0'
+	</select>
+	
+	<select id="getCustomerServiceIssueCountByTradeId" resultType="string" parameterType="string">
+		SELECT id FROM customer_service_issues WHERE trade_id=#{tradeId} AND state='0'
+	</select>
+	
+	<select id="getCSIdByCSNick" resultType="int" parameterType="string">
+		SELECT id FROM customer_service WHERE nick=#{nick}
+	</select>
+	
+	<select id="getCSIDetailByCSIId" resultType="object[]" parameterType="string">
+		SELECT d.id, d.csi_id, su.name, s.name, d.remark, d.file_path, d.create_time, d.status, d.light_type
+		FROM csi_detail d 
+		INNER JOIN csi_status s  ON d.status = s.id
+    	LEFT JOIN SYUSER su ON  d.nick = su.id
+		WHERE d.csi_id = #{csiId}
+		ORDER BY d.create_time
+	</select>
+	
+	<select id="queryCustomerServiceIssuesList" resultType="object[]">
+		SELECT c.trade_id, t.name, c.priority, c.title, s.name, c.create_time, c.disposal_nick, c.buyer_nick, c.id, (select s.name from csi_detail d  INNER JOIN csi_status s ON s.id = d.status WHERE d.csi_id = c.id order by d.create_time desc limit 0,1), (select light_type from csi_detail d WHERE d.csi_id = c.id order by d.create_time desc limit 0,1) as ligt_type
+		FROM customer_service_issues c
+		INNER JOIN csi_type t ON t.id = c.type
+		INNER JOIN csi_status s ON s.id = c.status
+		WHERE c.state = '0'
+		<if test="sellerNick != null">
+			AND c.seller_nick = #{sellerNick}
+		</if>
+		<if test="nick != null">
+			AND c.disposal_nick = #{nick}
+		</if>
+		<if test="tradeId != null">
+			AND c.trade_id = #{tradeId}
+		</if>
+		<if test="type != null">
+			AND c.type = #{type}
+		</if>
+		<if test="priority != null">
+			AND c.priority = #{priority}
+		</if>
+		<if test="status != null">
+			AND c.status = #{status}
+		</if>
+		<if test="buyer != null">
+			AND c.buyer_nick = #{buyer}
+		</if>
+		ORDER BY c.create_time desc
+		LIMIT #{start}, #{end}
+	</select>
+	
+	<select id="queryCustomerServiceIssuesCountList" resultType="int">
+		SELECT count(*) FROM customer_service_issues c
+		INNER JOIN csi_type t ON t.id = c.type
+		INNER JOIN csi_status s ON s.id = c.status
+		WHERE c.state = '0'
+		<if test="sellerNick != null">
+			AND c.seller_nick = #{sellerNick}
+		</if>
+		<if test="nick != null">
+			AND c.disposal_nick = #{nick}
+		</if>
+		<if test="tradeId != null">
+			AND c.trade_id = #{tradeId}
+		</if>
+		<if test="type != null">
+			AND c.type = #{type}
+		</if>
+		<if test="priority != null">
+			AND c.priority = #{priority}
+		</if>
+		<if test="status != null">
+			AND c.status = #{status}
+		</if>
+		<if test="buyer != null">
+			AND c.buyer_nick = #{buyer}
+		</if>
+	</select>
+	
+	<select id="queryCSIStatusList" resultType="com.chamago.pcrm.customerservice.pojo.CSIStatus">
+		SELECT id, name FROM csi_status
+	</select>
+	
+	<update id="updateCSIIssuesStatus" parameterType="map" >
+		UPDATE customer_service_issues SET status=#{status} WHERE trade_id=#{id}
+	</update>
+	
+	<select id="queryCustomerServiceByType" resultType="com.chamago.pcrm.customerservice.pojo.CustomerService" parameterType="string">
+		SELECT id, nick FROM customer_service WHERE type=#{type}
+	</select>
+	
+	<update id="saveAdmeasure" parameterType="map">
+		UPDATE customer_service_issues SET disposal_nick=#{csNick} where id=#{id}
+	</update>
+	
+	<select id="getEndCSIDetailOperateByCSIId" parameterType="string" resultType="string">
+		SELECT id FROM csi_detail WHERE csi_id=#{csiId} order by create_time desc LIMIT 0,1
+	</select>
+	
+	<update id="updateCSIDetailDisposalTime" parameterType="string">
+		UPDATE csi_detail SET disposal_time = now() WHERE id=#{id}
+	</update>
+	
+	<update id="updateCSIDisposalNickISNUll" parameterType="string">
+		UPDATE customer_service_issues SET disposal_nick = NULL WHERE trade_id=#{csiId}
+	</update>
+	
+	<select id="queryCSIStatusByTipNOTNull" resultMap="csiStatusResultMap">
+		SELECT * FROM csi_status WHERE yellow_light_alert_time IS NOT NULL AND red_light_alert_time IS NOT NULL
+	</select>
+	
+	<select id="queryEndCSIDetailByCSIIds" resultMap="csiDetailResultMap">
+		select cd.id cdid , cd.status, cd.create_time, cd.light_type, cd.yellow_light_time from csi_detail cd  INNER JOIN csi_status s ON s.id = cd.status WHERE cd.csi_id = #{csiIDs} order by cd.create_time desc limit 0,1
+	</select>
+	
+	<update id="updateCSIDetailLightType" parameterType="map">
+		UPDATE csi_detail SET light_type=#{lightType} 
+		<choose>
+			<when test="lightType == 2">
+				, yellow_light_time = now()
+			</when>
+			<when test="lightType == 3">
+				, red_light_time = now()
+			</when>
+		</choose>
+		WHERE id=#{id}
+	</update>
+	
+	<select id="getCsiDetailByCSId" parameterType="string" resultMap="csiDetailResultMap">
+		SELECT d.id, d.csi_id, d.nick, d.remark, d.file_path, d.create_time, d.status, d.light_type
+		FROM csi_detail d
+		WHERE d.id=#{id}
+	</select>
+	
+	<select id="getUntreatedCustomerServiceByNick" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM customer_service_issues WHERE disposal_nick=#{nick} AND buyer_nick=#{buyer}
+	</select>
+	
+	<select id="getCSIStatusById" parameterType="string" resultMap="csiStatusResultMap">
+		SELECT * FROM csi_status WHERE id=#{id}	
+	</select>
+	
+	<update id="deleteCustomerService" parameterType="string">
+		UPDATE customer_service_issues SET state = '1', delete_time = now() WHERE trade_id=#{tradeId}
+	</update>
+	
+	<insert id="saveType" parameterType="com.chamago.pcrm.customerservice.pojo.CSIType">
+		INSERT INTO csi_type (id, name, seller_nick, state, create_time)
+		VALUES(#{id}, #{name}, #{sellerNick}, '0', now())
+	</insert>
+	
+	<select id="getTypeCountbyName" parameterType="map" resultType="int">
+		SELECT COUNT(*) from csi_type WHERE seller_nick=#{sellerNick} AND name=#{name}
+	</select>
+	
+	<update id="deleteType" parameterType="string">
+		UPDATE csi_type SET state='1' WHERE id=#{id}
+	</update>
+	
+	<select id="getCSIStatusListByLight" resultMap="csiStatusResultMap">
+		SELECT id, name, yellow_light_alert_time, red_light_alert_time FROM csi_status WHERE yellow_light_alert_time IS NOT NULL AND red_light_alert_time IS NOT NULL
+	</select>
+	
+	<select id="getCustomAlertTimeBySellerNick" resultType="object[]" parameterType="string">
+		SELECT c.id, s.name, c.seller_nick, c.yellow_light_alert_time, c.red_light_alert_time FROM csi_custom_alerttime c
+		LEFT JOIN csi_status s ON c.status_id = s.id
+		WHERE state = '0' AND seller_nick=#{sellerNick}
+	</select>
+	
+	<insert id="saveCustomAlertTime" parameterType="com.chamago.pcrm.customerservice.pojo.CSICustomAlertTime">
+		INSERT INTO csi_custom_alerttime(id, seller_nick, status_id, yellow_light_alert_time, red_light_alert_time, state, create_time, modify_time)
+		VALUES (#{id}, #{sellerNick}, #{statusId}, #{yelloLightAlertTime}, #{redLightAlertTime}, '0', now(), now())
+	</insert>
+	
+	<select id="getCustomAlertTimeCountByStatusId" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM csi_custom_alerttime WHERE status_id=#{id} AND seller_nick=#{sellerNick} AND state='0'
+	</select>
+	
+	<update id="deleteCustomAlertTime" parameterType="string">
+		UPDATE csi_custom_alerttime SET state = '1', delete_time = now()  WHERE id=#{id}
+	</update>
+	
+	<select id="loadCustomAlertTimeBySellerNick" resultMap="csiCustomAlertTimeResultMap" parameterType="string">
+		SELECT c.status_id, c.yellow_light_alert_time, c.red_light_alert_time FROM csi_custom_alerttime c
+		WHERE c.state = '0' AND c.seller_nick=#{sellerNick}
+	</select>
+	
+	<select id="loadCustomAlertTimeBySellerNick2" resultMap="csiCustomAlertTimeResultMap2" parameterType="string">
+		SELECT c.status_id, s.name, c.yellow_light_alert_time, c.red_light_alert_time, c.modify_time FROM csi_custom_alerttime c
+		inner join csi_status s on s.id = c.status_id
+		WHERE c.state = '0' AND c.seller_nick=#{sellerNick}
+	</select>
+	
+	<select id="getCustomerServiceCountByType" resultType="int" parameterType="string">
+		SELECT COUNT(*) FROM customer_service_issues WHERE type=#{type} AND state=0
+	</select>
+	
+	<update id="UpdateCustomAlertTime" parameterType="map">
+		UPDATE csi_custom_alerttime SET yellow_light_alert_time=#{y}, red_light_alert_time=#{r}, modify_time=now() WHERE status_id=#{id} AND seller_nick=#{sellerNick}
+	</update>
+	
+	<select id="getCustomerServiceIssuesByPresent" parameterType="map" resultMap="customerServiceIssuesResultMap">
+		SELECT c.id, c.trade_id, c.title
+		FROM customer_service_issues c
+		WHERE c.buyer_nick=#{buyer} AND c.disposal_nick IS NOT NULL AND c.seller_nick=#{seller} AND c.state = '0' AND (select s.id from csi_detail d  INNER JOIN csi_status s ON s.id = d.status WHERE d.csi_id = c.id order by d.create_time desc limit 0,1) != 4
+	</select>
+	
+	<select id="getCustomerServiceIssuesByUndisposed" parameterType="map" resultMap="customerServiceIssuesResultMap">
+		SELECT c.id, c.trade_id, c.title
+		FROM customer_service_issues c
+		WHERE c.buyer_nick=#{buyer} AND c.disposal_nick IS NULL AND c.seller_nick=#{seller} AND c.state = '0'
+	</select>
+	
+	<select id="getCSIStatusByOperatSeq" resultMap="csiStatusResultMap">
+		SELECT * FROM csi_status WHERE id IN 
+		<foreach collection="array" index="index" item="statusid" open="(" separator="," close=")"> 
+            #{statusid} 
+        </foreach>
+	</select>
+	<select id="getUserListBySellerNick" resultType="object[]" parameterType="string">
+		SELECT id, name FROM SYUSER where seller_nick =  #{sellerNick}
+	</select>
+	
+	<select id="getCustomerServiceCountByBuyerNick" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM customer_service_issues WHERE buyer_nick=#{buyerNick}  AND seller_nick = #{sellerNick} AND state = 0
+	</select>
+	
+	<select id="getCustomerServiceCountBySellerNick" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM customer_service_issues WHERE seller_nick = #{sellerNick} AND state = 0
+	</select>
+	
+	<update id="deleteCSType" parameterType="string">
+		UPDATE csi_type set state='1', modify_time= now() WHERE id = #{id} 
+	</update>
+	
+	<update id="updateCSIType" parameterType="com.chamago.pcrm.customerservice.pojo.CSIType">
+		UPDATE csi_type set name=#{name}, modify_time = now() WHERE id = #{id} 
+	</update>
+	
+	<select id="getCsiTypeById" resultType="com.chamago.pcrm.customerservice.pojo.CSIType" parameterType="string">
+		SELECT id, name FROM csi_type WHERE id=#{id}
+	</select>
+</mapper>

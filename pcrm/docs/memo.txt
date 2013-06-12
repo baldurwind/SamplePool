@@ -1,0 +1,111 @@
+delete  from    pcrm_qa.SYUSER_SYROLE where syuser_id  in (select   id  from pcrm_qa.SYUSER where  seller_nick='良无限清洁收纳');
+delete  from    pcrm_qa.SYROLE_SYREOURCE where SYROLE_ID =(select id from pcrm_qa.SYROLE where seller_nick='良无限清洁收纳');
+delete FROM  pcrm_qa.SYROLE where seller_nick='良无限清洁收纳';
+delete FROM  pcrm_qa.SYUSER where  seller_nick='良无限清洁收纳' ;
+delete from open_qa.taobao_subscriber where nick='良无限清洁收纳'  and app_key='12532585';
+delete from pcrm_qa.item where nick='良无限清洁收纳';
+
+只能显示最近3个月的订单限制
+
+shipping address:
+LogisticsOrdersDetailGetRequest
+taobao.logistics.orders.detail.get
+
+trace:
+taobao.logistics.orders.detail
+taobao.logistics.trace.search
+
+备忘无限制
+------------------------------------------------------------------
+芳蕾本地授权调试
+http://127.0.0.1:8080/open/app/callback?encode=utf-8&top_appkey=12441913&top_parameters=ZXhwaXJlc19pbj04NjQwMCZpZnJhbWU9MSZyZV9leHBpcmVzX2luPTAmcmVmcmVzaF90b2tlbj02MTAwNzA3ZDhlMDM4MDUxZTM0ZGQ5MGJkOTg4YjRjMmZlZTg0N2EyYjg2NjI0YTExNzg3NjU3NSZ0cz0xMzIzMDU5NDU1NTIzJnZpc2l0b3JfaWQ9MTE3ODc2NTc1JnZpc2l0b3Jfbmljaz23vMDZw7W55bfbt9vG7L2iteo%3D&top_session=6102b0730ed2834145a786f482abd43e968856f05a7dfe7117876575&sign=Qb4B19K4pJxp8Rh%2Bih1l4A%3D%3D&timestamp=2011-12-05+12%3A30%3A52&top_sign=6ZL4yN%2FkwyWuOHIMKFk9dQ%3D%3D
+芳蕾本地初始化脚本
+http://127.0.0.1:8080/pcrm/app/init?appkey=12442189&sellernick=%E8%8A%B3%E8%95%BE%E7%8E%AB%E7%91%B0%E7%B2%89%E7%B2%89%E6%97%97%E8%88%B0%E5%BA%97
+
+芳蕾远程授权调试
+http://app.chamago.com/app/callback?encode=utf-8&top_appkey=12441913&top_parameters=ZXhwaXJlc19pbj04NjQwMCZpZnJhbWU9MSZyZV9leHBpcmVzX2luPTAmcmVmcmVzaF90b2tlbj02MTAwNzA3ZDhlMDM4MDUxZTM0ZGQ5MGJkOTg4YjRjMmZlZTg0N2EyYjg2NjI0YTExNzg3NjU3NSZ0cz0xMzIzMDU5NDU1NTIzJnZpc2l0b3JfaWQ9MTE3ODc2NTc1JnZpc2l0b3Jfbmljaz23vMDZw7W55bfbt9vG7L2iteo%3D&top_session=6102b0730ed2834145a786f482abd43e968856f05a7dfe7117876575&sign=Qb4B19K4pJxp8Rh%2Bih1l4A%3D%3D&timestamp=2011-12-05+12%3A30%3A52&top_sign=6ZL4yN%2FkwyWuOHIMKFk9dQ%3D%3D
+芳蕾远程初始化脚本
+http://pcrm.chamago.com/app/init?appkey=12441913&sellernick=%E8%8A%B3%E8%95%BE%E7%8E%AB%E7%91%B0%E7%B2%89%E7%B2%89%E6%97%97%E8%88%B0%E5%BA%97
+
+
+################################################
+####callback:http://app.chamago.com/app/callback?encode=utf-8
+####http://pcrm.chamago.com/index
+################################################
+
+################################################
+http://127.0.0.1:8080/pcrm/index
+http://127.0.0.1:8080/open/app/callback?encode=utf-8
+################################################
+/home/chamago/kettle-4.2/kitchen.sh -rep=repo-taobao -job=item/taobao.items.get -level=Error -log=/home/chamago/kettle-logs/taobao.items.get.`date +"%Y%m%d%H%M%S"`.log -param:app_key=12441913 -param:db=pcrm2 -param:taobao_api_id=px2 -param:nick=芳蕾玫瑰粉粉旗舰店  ; echo $? 
+http://container.open.taobao.com/container?appkey=12285265
+tb：tp_茶马古道 chamago123456
+交易appkey=12296569
+
+1.可能存在ProductId=0的 Item ,会导致关联商品查找不到.
+2.营销接口还未完全实现,只有通过应用添加的营销才能查找.
+
+
+
+crm members .get   数据库缺少buyer_id字段
+ 
+ 
+ 当trade的numiid为空时,
+ 说明有多个order
+ 
+ tid=oid
+ 的时候说明每次交易只有一件商品
+########################################################################
+测试数据
+3条tid  每次交易都是一件物品
+buyer_nick  丫头20101221
+tid: 111788329113622
+
+--------------------------------------------------
+我是女生13984
+tid:105382055815646  3件物品3件
+剩余还有4,5个tid
+
+网页
+TID:105382055815646
+		105382055845646 2222637557
+		105382055835646 7176200005
+		105382055825646 2223870665
+
+
+
+SELECT * FROM trade WHERE buyer_nick='我是女生13984'
+SELECT * FROM trade_order WHERE buyer_nick='我是女生13984'
+
+########################################################
+
+即时Trade
+数据库已存在旧记录:
+	拉最新的数据大于本地数据库trade的时间start_created
+无记录:
+	根据buyer_nick
+
+批量:
+buyer_nick
+
+更新订单状态
+只更具非最终状态的条件去更新trade,order
+
+
+select * from crm_customer  where buyer_nick='丫头20101221'
+
+
+
+
+SELECT  item_id numIid, count(item_id) frequency FROM acookie_item  WHERE nick_mask =(
+SELECT nick_mask FROM acookie_mapping WHERE buyer_nick=#{buyernick} and seller_nick=#{sellernick}
+)GROUP BY item_id
+
+
+select item_id, count(item_id) , i.title title, i.detail_url detailUrl ,i.pic_url picUrl  from acookie_item
+,item  i
+ 
+where nick_mask =(
+select nick_mask from acookie_mapping where buyer_nick='我是女生13984' and seller_nick='芳蕾玫瑰粉粉旗舰店'
+)  AND  i.num_iid=acookie_item.item_id GROUP BY item_id
+12360182277,12429016091,12486286781,12699970741,13304896204

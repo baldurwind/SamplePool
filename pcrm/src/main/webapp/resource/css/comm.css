@@ -1,0 +1,79 @@
+@charset "utf-8";
+/* CSS Document */
+*{ margin:0; padding:0;}
+html{color:#000;background:#fff;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr{margin:0;padding:0;}
+body,button,input,select,textarea{ font-size:12px; font-family:"微软雅黑", arial; color:#333;}
+input,select,textarea{font-size:100%;}
+table{border-collapse:collapse;border-spacing:0; font-size:12px;}
+caption,th{text-align:left;}
+fieldset,img,a img,a{border:0; }
+iframe{display:block;}
+ol,ul,li{list-style:none;}
+.clear{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;*zoom:1;}
+.clearfix:after{clear: both;content: ".";display: block;height: 0;visibility: hidden;}
+.hide{display:none;}
+.left{float:left;}
+.right{float:right;}
+.tc{ text-align:center}
+/* q:before,q:after{content:'';} */
+a,a:link,a:visited{ font-family:"微软雅黑", Arial; font-size:12px; text-decoration:none;font-weight:normal; outline:none; color:#333;}
+a:hover{text-decoration:underline;}
+a:active{star:expression(this.onFocus=this.blur());}
+.prelative{position:relative;}
+.pointer{cursor:pointer;}
+/*font style*/
+.f12ju{ font-size:12px; color:#FF6600;}
+/*wrap*/
+body{ width:100%; margin:0 auto; }
+
+/* nav */
+.topContiner{}
+.topContiner .con{background:url(http://static.chamago.cn/resource/images/cus-top-bj.gif) 300px 0 no-repeat #FFF; height:50px; width:100%;  }
+.topContiner .con .cus-logo{ width:300px; height:50px; background:url(http://static.chamago.cn/resource/images/logo.gif) no-repeat; margin-left:20px; float:left;}
+.nav{ width:100%; border-bottom:4px solid #549ae2; background:#f8f8f8; float:left;}
+.nav li{ float:left; margin-right:2px;}
+.nav li a,.nav li a:visited{  color:#666;  display:block; padding:10px 15px; font-size:16px!important; font-weight:bold!important;}
+.nav li a:hover{ background:url(http://static.chamago.cn/resource/images/cus-left-navtit-bg.png) repeat-x!important; text-decoration:none; color:#ffffff!important;}
+.nav_choose{ color:#ffffff!important; background:url(http://static.chamago.cn/resource/images/cus-left-navtit-bg.png) repeat-x!important;}
+.nav .fr{ float:right;margin:0 25px 0 0 ;  display:inline;}
+.nav .fr a{ font-size:14px; color:#333; font-weight:bold; cursor:pointer;}
+
+.cus-mainnav{ width:100%; border-bottom:4px solid #549ae2; float:left;background:#f4f4f4; }
+.cus-mainnav li{ float:left; margin-right:2px;}
+.cus-mainnav li a,.cus-mainnav li a:visited{ color:#666;!important;  display:block; padding:10px 15px; font-size:16px!important; font-weight:bold!important;}
+.cus-mainnav li a:hover , .nav_choose{ text-decoration:none; color:#ffffff!important; background:url(images/cus-left-navtit-bg.png) repeat-x;}
+/* backend_left */
+.backend_left{ width:182px; float:left;}
+.alluser{ width:160px; border:1px solid #e4e4e4; background-color:#f2f2f2;  padding:10px 0 10px 20px;  margin-bottom:3px;}
+.alluser a{ display:block;font-size:14px;font-weight:bold;}
+.alluser a:hover{ text-decoration:none;}
+.menu_fl{ border:1px solid #e4e4e4; background:url(http://static.chamago.cn/resource/images/left-bj.gif) repeat-x; padding-left:20px; height:29px; margin-bottom:1px;}
+.menu_fl a{ color:#333; display:block;font-size:14px; line-height:29px;font-weight:bold;}
+.menu_fl a:hover{ text-decoration:none;}
+.menu_zl{ border-top:1px solid #e4e4e4;}
+.menu_zl li{ border-left:1px solid #e4e4e4;border-right:1px solid #e4e4e4;border-bottom:1px solid #e4e4e4; background-color:#f2f2f2; line-height:29px;}
+.menu_zl li:hover,.menu_zl_choose{ background-color:#ffffff!important;} 
+.menu_zl li a{ color:#333; padding-left:20px; font-size:14px;}
+.menu_zl li a:hover, .menu_zl_choose{text-decoration:none;}
+.menu_zl li img{ margin:0 4px; cursor:pointer;}
+.menu_add,.menu_addshouhou{ line-height:29px;} 
+
+
+/* backend_right */
+.backend_right{ margin-left:200px; min-width:900px;} 
+.cus-left{ position:fixed; top:0; left:0; _position: absolute;}
+.cus-leftnav-tit{ width:194px;background:url(http://static.chamago.cn/resource/images/panel_title.png) repeat-x!important; height:26px; line-height:26px; text-indent:15px; color:#FFF; font-weight:bold; font-size:16px}                       
+.cus-leftNav{ width:193px; height:100%; border-right:1px solid #c1d9e8; border-bottom:1px solid #c1d9e8; padding:0; _width:192px; background:#f8f8f8; padding-bottom:50px; }
+.cus-leftNav .cus-leftNav-list{ width:100%;}
+.cus-leftNav .cus-leftNav-list h3.navTit{ border-bottom:1px solid #c1d9e8; height:30px; font-size:14px; line-height:30px; padding:0; margin:0; color:#47a8e6; text-indent:35px; background:url(http://static.chamago.cn/resource/images/cus-left-navtit-on.png) 15px 8px no-repeat; cursor:pointer}
+.cus-leftNav .cus-leftNav-list h3.navTit span{ vertical-align:middle}
+.cus-leftNav .cus-leftNav-list h3.navTit img{vertical-align:middle; margin-left:7px;}
+.cus-leftNav .cus-leftNav-list h3.choose{ background:url(http://static.chamago.cn/resource/images/cus-left-navtit.png)  15px 7px no-repeat;}
+.cus-leftNav .cus-leftNav-list ul{ width:180px;padding:0; margin:5px 0; float:right; position:relative; right:-1px; z-index:500; }
+.cus-leftNav .cus-leftNav-list ul li{ height:28px; line-height:28px;   border-right-color:#3e99d3; text-indent:25px; cursor:pointer}
+.cus-leftNav .cus-leftNav-list ul li.curr{ border:1px solid #c1d9e8; border-right-color:#FFFFFF;  color:#47a8e6; background:#FFFFFF}
+.cus-leftNav .cus-leftNav-list ul li a,.cus-leftNav .cus-leftNav-list ul li a:visited{ color:#333; text-decoration:none; vertical-align:middle}
+.cus-leftNav .cus-leftNav-list ul li a:hover{ color:#47a8e6 ; text-decoration:none}
+.cus-leftNav .cus-leftNav-list ul li.curr a{ color:#47a8e6}
+.cus-leftNav .cus-leftNav-list ul li img{ margin-left:6px; vertical-align:middle}

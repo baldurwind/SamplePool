@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="EserviceMapper">
+
+	<select id="findResponseTimeData" parameterType="java.util.Map" resultType="object[]">
+		SELECT  avg_waiting_times
+		FROM eservice_repsone_time t
+		WHERE  t.service_staff_id = #{staffid} and t.waiting_date = #{date}
+	</select>
+	
+	<select id="findReceiveNumData" parameterType="java.util.Map" resultType="object[]">
+		SELECT  count(distinct uid)
+		FROM eservice_chatpeers t
+		WHERE t.chat_id = #{userid} and t.date = #{date}
+	</select>
+	
+	<select id="findNickReceiveNumData" parameterType="java.util.Map" resultType="object[]">
+		SELECT t.user_id,t.reply_num
+		FROM eservice_receive_num t
+		WHERE t.nick = #{seller} and t.reply_date = #{qDate} 
+			  group by t.user_id
+	</select>
+	
+	<select id="findTotalReceiveNumDataBySeller" parameterType="java.util.Map" resultType="object[]">
+		SELECT  t.reply_date,sum(reply_num)
+		FROM eservice_receive_num t
+		WHERE t.nick = #{seller} and t.reply_date between #{startDate} and #{endDate} 
+			  group by t.reply_date order by t.reply_date asc
+	</select>
+	
+	<select id="findEveryOneNoreplyNum" parameterType="java.util.Map" resultType="object[]">
+		SELECT t.service_staff_id,t.non_reply_num
+		FROM eservice_noreply_master t
+		WHERE t.nick = #{seller} and t.nonreply_date = #{qDate} 
+			  group by t.service_staff_id
+	</select>
+	
+	<select id="findTotalNoreplyNumDataBySeller" parameterType="java.util.Map" resultType="object[]">
+		SELECT  t.nonreply_date,sum(non_reply_num)
+		FROM eservice_noreply_master t
+		WHERE t.nick = #{seller} and t.nonreply_date between #{startDate} and #{endDate} 
+			  group by t.nonreply_date order by t.reply_date asc
+	</select>
+	
+  	<select id="findNickMemberList" resultType="object[]">
+		SELECT p.nick,p.group_id,p.group_name,t.member
+		FROM eservice_group_members t,eservice_groups p
+    	WHERE t.group_id = p.group_id 
+	</select>
+	
+	<select id="findGroupMembersByUserid" parameterType="string" resultType="object[]">
+	  	SELECT member 
+	  	FROM eservice_group_members
+		WHERE group_id = (select group_id from eservice_group_members where member = #{seller})
+	</select>
+  	
+  	<select id="findGroupIdByUserid" parameterType="string" resultType="long">
+	  	SELECT group_id 
+	  	FROM eservice_group_members
+		WHERE member = #{member}
+	</select>
+  	
+	<select id="findGroupsByNick" parameterType="string" resultType="object[]">
+	  	SELECT group_id,group_name 
+	  	FROM eservice_groups
+		WHERE nick = #{nick}
+	</select>
+	
+	
+	<select id="findMembersByNick" parameterType="string" resultType="object[]">
+	  	SELECT id,name 
+	  	FROM SYUSER
+		WHERE sellernick = #{nick}
+	</select>
+	<select id="findMembersByGroupId" parameterType="string" resultType="object[]">
+	  	SELECT member 
+	  	FROM eservice_group_members
+		WHERE group_id = #{groupid}
+	</select>
+	
+	<select id="getMembersByGroupS" resultType="object[]">
+	  	SELECT member 
+	  	FROM eservice_group_members
+		WHERE group_id in
+		<foreach collection="array" index="index" item="group" open="(" separator="," close=")">
+			#{group}
+		</foreach>
+	</select>
+	
+	<select id="findChatpeersByChatId" parameterType="java.util.Map" resultType="object[]">
+	  	SELECT nick,uid FROM eservice_chatpeers 
+		WHERE chat_id = #{userid} and date = #{date};
+	</select>
+	
+	<select id="getChatpeersNumsByChatId" parameterType="java.util.Map" resultType="long">
+	  	SELECT count(uid) FROM eservice_chatpeers 
+		WHERE chat_id = #{chat_id} and date = #{date};
+	</select>
+	
+	<select id="findChatRecordUrl" parameterType="string" resultType="object[]">
+	  	SELECT service_staff_id,log_file_url
+	  	FROM eservice_chatrecord 
+		WHERE nick = #{seller};
+	</select>
+	
+	<select id="findChatRecordDetail" parameterType="java.util.Map" resultType="object[]">
+	  	SELECT t.chat_id,count(t.time) chatnums
+		FROM eservice_chatlog t 
+		where uid = #{buyer}
+		and t.time between #{startDate} and #{endDate}
+		<if test="interval>0">
+			<![CDATA[
+				and unix_timestamp(#{statusTime})-unix_timestamp(t.time) < #{interval} 
+			]]>
+		</if>
+		and unix_timestamp(#{statusTime})-unix_timestamp(t.time) >0
+		group by chat_id order by chatnums desc
+	</select>
+	
+	<select id="findChatRecordDetailAfterPay" parameterType="java.util.Map" resultType="object[]">
+	  	SELECT t.nick,count(t.chattime) chatnums
+		FROM eservice_chatrecord_detail t 
+		where buyer = #{buyer}
+		and t.chattime between #{created} and #{paydate}
+		group by nick order by chatnums desc
+	</select>
+	
+</mapper>

@@ -1,0 +1,41 @@
+.tableForm {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.tableForm th,.tableForm td {
+	border: 1px solid #8CACBB;
+	padding: 3px;
+	text-align: center;
+}
+
+.tableForm td input {
+	width: 98%;
+}
+
+.tableForm th {
+	background: #eee;
+	text-align: right;
+}
+
+.menuDiv {
+	padding-top: 5px;
+	text-align: center;
+}
+
+.menuDiv img {
+	cursor: pointer;
+}
+
+.tree-file {
+	display: inline-block;
+	background: url('../images/icons/usb.png') no-repeat;
+	width: 16px;
+	height: 18px;
+	vertical-align: middle;
+}
+
+.tree-folder-open {
+	background: url('../images/icons/monitor.png') no-repeat;
+}

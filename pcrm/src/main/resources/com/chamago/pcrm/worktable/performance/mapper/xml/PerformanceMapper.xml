@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="PerformanceMapper">
+	<resultMap id="result_performance" type="com.chamago.pcrm.worktable.performance.pojo.Performance" >
+	    <id column="id" property="id" jdbcType="INTEGER" />
+	    <result column="user_id" property="userId" jdbcType="CHAR" />
+	    <result column="receivenum" property="receivenNum" jdbcType="CHAR" />
+	    <result column="noreplynum" property="noreplyNums" jdbcType="CHAR" />
+	    <result column="chatpeernum" property="chatpeerNums" jdbcType="CHAR" />
+	    <result column="totalamount" property="totalAmount" jdbcType="FLOAT" />
+	    <result column="totalbuyers" property="totalBuyers" jdbcType="INTEGER" />
+	    <!-- 
+	    <result column="serviceresult" property="customResult" jdbcType="CHAR" />
+	     -->
+	    <result column="responsetime" property="avgRespTime" jdbcType="CHAR" />
+	    <result column="ranking" property="ranking" jdbcType="INTEGER" />
+	    <result column="date" property="date" jdbcType="TIMESTAMP" />
+	    <result column="created" property="created" jdbcType="TIMESTAMP" />
+	    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+
+	<insert id="insertPerformance"   parameterType="com.chamago.pcrm.worktable.performance.pojo.Performance">
+		INSERT INTO performance (`id`,`user_id`,`receivenum`,`noreplynum`,`chatpeernum`,`totalamount`,`totalbuyers`,`responsetime`,`date`,`created`,`modified`)
+		VALUES(#{id},#{userId},#{receivenNum},#{noreplyNums},#{chatpeerNums},#{totalAmount},#{totalBuyers},#{avgRespTime},#{date},#{created},#{modified})
+	</insert>
+	
+	<insert id="insertPeriodPerformance"   parameterType="com.chamago.pcrm.worktable.performance.pojo.Performance">
+		INSERT INTO period_performance (`id`,`user_id`,`receivenum`,`noreplynum`,`chatpeernum`,`totalamount`,`totalbuyers`,`responsetime`,`ranking`,`type`,`created`,`modified`)
+		VALUES(#{id},#{userId},#{receivenNum},#{noreplyNums},#{chatpeerNums},#{totalAmount},#{totalBuyers},#{avgRespTime},#{ranking},#{type},#{created},#{modified})
+	</insert>
+	 
+	<insert id="insertAvgPerformance"   parameterType="com.chamago.pcrm.worktable.performance.pojo.Performance">
+		INSERT INTO performance_average (`nick`,`groupid`,`avg_receivenum`,`avg_noreplynum`,`avg_chatpeernum`,`avg_price`,`avg_serviceresult`,`avg_responsetime`,`created`,`modified`)
+		VALUES(#{nick},#{groupId},#{receivenNum},#{noreplyNums},#{chatpeerNums},#{customPrice},#{customResult},#{avgRespTime},#{created},#{modified})
+	</insert>
+	
+	<update id="updateAvgPerformance"  parameterType="com.chamago.pcrm.worktable.performance.pojo.Performance" >
+  		UPDATE performance_average 
+  		SET `avg_receivenum`=#{receivenNum},`avg_price`=#{customPrice},`avg_serviceresult`=#{customResult},`avg_responsetime`=#{avgRespTime},`modified`=#{modified}
+  		WHERE groupid=#{groupId}
+  	</update>
+	
+	<select id="findPerformanceByUseridAndDate" parameterType="java.util.Map" resultMap="result_performance">
+	     SELECT * FROM performance t
+	     WHERE t.user_id = #{userid} and t.date between #{startDate} and #{endDate}
+	</select>
+	
+	<select id="deletePeriodPerformanceByUseridAndType" parameterType="java.util.Map" resultType="long">
+	     delete FROM period_performance 
+	     WHERE user_id = #{userid} and type = #{type} 
+	</select>
+	
+	<select id="findPeriodPerformanceByUseridAndType" parameterType="java.util.Map" resultMap="result_performance">
+	     SELECT * FROM period_performance 
+	     WHERE user_id = #{userid} and type = #{type} order by created desc
+	</select>
+	
+	<select id="findAvgPerformanceByGroupId" parameterType="long" resultType="long">
+	     SELECT count(*) FROM performance_average t
+	     WHERE t.groupid = #{groupId}
+	</select>
+	
+	<select id="findGroupAvgPerformanceByGroupId" parameterType="long" resultType="object[]">
+	     SELECT avg_receivenum,avg_noreplynum,avg_chatpeernum,avg_responsetime,avg_price,avg_serviceresult FROM performance_average t
+	     WHERE t.groupid = #{groupId}
+	</select>
+	
+	<select id="findPerformanceByUserid" parameterType="string" resultMap="result_performance">
+	     SELECT * FROM performance t
+	     WHERE t.user_id = #{seller}
+	</select>
+	
+	
+</mapper>

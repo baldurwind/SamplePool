@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="UserMapper">
+
+	<resultMap type="com.chamago.pcrm.user.pojo.User" id="userMap">
+		<result column="ID" property="id"/>
+		<result column="NAME" property="name"/>
+		<result column="MOBILE" property="mobile"/>
+		<result column="EMAIL" property="email"/>
+		<result column="STATUS" property="status"/>
+		<result column="EMPLOYE_NUM" property="employeeNum"/>
+		<result column="SELLER_NICK" property="sellerNick"/>
+	</resultMap>
+	
+	<!-- 保存用户信息 -->
+	<insert id="saveUser" parameterType="com.chamago.pcrm.user.pojo.User">
+		INSERT INTO employee (ID, NAME, MOBILE, EMAIL, EMPLOYE_NUM, SELLER_NICK, STATUS, CREATEDATETIME)
+		VALUES(#{id}, #{name}, #{mobile}, #{email}, #{employeeNum}, #{sellerNick}, '0', now())
+	</insert>
+	
+	<!-- 修改用户信息 -->
+	<update id="updateUser" parameterType="com.chamago.pcrm.user.pojo.User">
+		UPDATE employee SET NAME = #{name}, MOBILE = #{mobile}, EMAIL = #{email}, EMPLOYE_NUM = #{employeeNum}, MODIFYDATETIME = now() WHERE ID = #{id}
+	</update>
+	
+	<!-- 删除用户信息 -->
+	<update id="deleteUser" parameterType="string">
+		UPDATE employee SET STATUS = '1', MODIFYDATETIME = now() WHERE ID = #{id}
+	</update>
+	
+	<!-- 根据条件获取用户个数 -->
+	<select id="loadUserListCount" parameterType="map" resultType="int">
+		SELECT count(*) FROM employee WHERE SELLER_NICK = #{sellerNick} AND STATUS = '0'
+		<if test="name != null">
+			AND NAME = #{name}
+		</if>
+		<if test="employeenum != null">
+			AND EMPLOYE_NUM = #{employeenum}
+		</if>
+	</select>
+	
+	<!-- 根据条件分页查询用户信息 -->
+	<select id="loadUserList" parameterType="map" resultMap="userMap">
+		SELECT ID, NAME, MOBILE, EMAIL, EMPLOYE_NUM, STATUS FROM employee WHERE SELLER_NICK = #{sellerNick} AND STATUS = '0'
+		<if test="name != null">
+			AND NAME = #{name}
+		</if>
+		<if test="employeenum != null">
+			AND EMPLOYE_NUM = #{employeenum}
+		</if>
+		ORDER BY CREATEDATETIME
+		LIMIT #{start}, #{end}
+	</select>
+	
+	<!-- 判断当前员工号是否已使用 -->
+	<select id="getEmployeeNumCount" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM employee WHERE EMPLOYE_NUM = #{employeenum} AND SELLER_NICK = #{sellerNick} AND STATUS = '0'
+		<if test="id != null">
+			AND ID != #{id}
+		</if>
+	</select>
+	
+	<!-- 获取用户信息详细 -->
+	<select id="getUserById" resultMap="userMap">
+		SELECT ID, NAME, MOBILE, EMAIL, EMPLOYE_NUM, SELLER_NICK FROM employee WHERE ID = #{id}
+	</select>
+</mapper>
+

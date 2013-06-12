@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="NoticeMapper">
+	<resultMap id="result_notice" type="com.chamago.pcrm.worktable.notice.pojo.Notice" >
+	    <id column="id" property="id" jdbcType="INTEGER" />
+	    <result column="title" property="title" jdbcType="CHAR" />
+	    <result column="content" property="content" jdbcType="CHAR" />
+	    <result column="creator" property="creator" jdbcType="INTEGER" />
+	    <result column="created" property="created" jdbcType="TIMESTAMP" />
+	    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="result_noticeDetail" type="com.chamago.pcrm.worktable.notice.pojo.NoticeDetail" >
+	    <id column="user_id" property="userId" jdbcType="INTEGER" />
+	    <id column="notice_id" property="noticeId" jdbcType="INTEGER" />
+	    <result column="read" property="read" jdbcType="INTEGER" />
+	    <result column="created" property="created" jdbcType="TIMESTAMP" />
+	    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<insert id="insertNotice"   parameterType="com.chamago.pcrm.worktable.notice.pojo.Notice">
+		INSERT INTO worktable_notice (`id`,`title`,`content`,`creator`,`created`,`modified`)
+		VALUES(#{id},#{title},#{content},#{creator},#{created},#{modified})
+	</insert>
+	
+	<insert id="insertNoticeDetail"   parameterType="com.chamago.pcrm.worktable.notice.pojo.NoticeDetail">
+		INSERT INTO worktable_notice_detail (`user_id`,`notice_id`,`read`,`created`,`modified`)
+		VALUES(#{userId},#{noticeId},#{read},#{created},#{modified})
+	</insert>
+	 
+	 
+	<select id="findAllNotice"  resultMap="result_notice">SELECT * FROM worktable_notice</select>
+	<select id="findNoticeByNoticeid" parameterType="string" resultType="object[]">
+		SELECT  id 
+		FROM worktable_notice 
+		WHERE  id = #{noticeid}
+	</select>
+	 
+	<select id="findNoticeByUserid" parameterType="string" resultType="object[]">
+		SELECT  tn.id,tn.title,tn.content,tn.creator,tn.created,tnd.read 
+		FROM worktable_notice tn,worktable_notice_detail tnd
+		WHERE tnd.notice_id= tn.id and tnd.user_id = #{userid} order by tnd.read asc,tnd.created desc
+	</select>
+	
+	<select id="findNoReadeNoticeCountByUserid" parameterType="string" resultType="object[]">
+		SELECT  count(*) 
+		FROM worktable_notice_detail 
+		WHERE user_id = #{userid} and `read` =0 order by created desc
+	</select>
+	
+	<select id="findNoticeByUseridAndStatus" parameterType="java.util.Map" resultType="object[]">
+		SELECT  tn.id,tn.title,tn.content,u.name,tn.created,tnd.read 
+		FROM worktable_notice tn,worktable_notice_detail tnd,SYUSER u
+		WHERE tnd.notice_id= tn.id and tnd.user_id = u.id and tnd.user_id = #{userid} and tnd.read = #{read} order by tn.created desc
+	</select>
+	
+	<update id="updateNoticeDetail"  parameterType="com.chamago.pcrm.worktable.notice.pojo.NoticeDetail" >
+  		UPDATE worktable_notice_detail SET `read`=#{read}, modified=#{modified}  WHERE notice_id=#{noticeId} AND user_id=#{userId}
+  	</update>
+  	
+</mapper>

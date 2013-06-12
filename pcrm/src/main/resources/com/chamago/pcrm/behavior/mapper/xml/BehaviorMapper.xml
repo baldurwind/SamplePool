@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="BehaviorMapper" >
+ <select id="findKeyword" resultType="object[]"  parameterType="map">
+  <!-- 
+ SELECT  keyword,frequency
+  FROM acookie_keywords_view 
+  WHERE buyer_nick=#{buyer} AND seller_nick=#{seller}
+  GROUP by keyword ORDER BY frequency DESC LIMIT 10
+   -->
+ 
+select 
+`b`.`keyword` AS `keyword`,
+count(0) AS `frequency`
+ 
+from (`acookie_nickmask_nick_mapping` `a` join `acookie` `b` 
+on(((`a`.`nick_mask` = `b`.`nick_mask`)))) 
+where b.nick = #{seller}
+and a.buyer_nick = #{buyer}
+and b.keyword is not null
+group by `b`.`keyword` order by count(0) desc
+limit 10;
+ 
+  
+  
+  
+  </select>
+  
+  
+
+<select id="findPageView" resultType="int" parameterType="map">
+	SELECT total_pageview 
+	FROM  acookie_total_pageview_per_buyer 
+	WHERE nick=#{seller} AND buyer_nick =#{buyer}</select>
+
+
+<select id="findBoughtItem"  parameterType="map" resultType="object[]">   
+  SELECT   a.num_iid   , COUNT(*) frequency ,  title   ,pic_url ,item.price ,num  ,a.modified 
+  FROM  (
+  		 SELECT  num_iid ,modified  
+  		 FROM trade_order    
+  		 WHERE seller_nick=#{seller} AND buyer_nick= #{buyer}   AND status = 'TRADE_FINISHED'    
+		 UNION ALL
+		 SELECT  num_iid  ,end_time 'modified'  
+		 FROM trade_hist    
+		 WHERE   seller_nick=#{seller} AND buyer_nick= #{buyer} AND status!=1  AND  num_iid !=0
+   ) a INNER JOIN item   on item.num_iid=a.num_iid  GROUP BY num_iid  ORDER BY frequency DESC
+</select>
+
+
+<select id="findVisitingHistory" parameterType="map" resultType="object[]">
+<!-- 
+SELECT item_id , COUNT(item_id)  , i.title  , i.detail_url,i.pic_url,price,num
+FROM acookie_item,item i
+WHERE nick_mask =(
+	SELECT nick_mask 
+	FROM acookie_nickmask_nick_mapping 
+	WHERE buyer_nick=#{buyer} AND seller_nick=#{seller}
+	) 
+AND i.num_iid=acookie_item.item_id  AND i.nick=#{seller} 
+GROUP BY item_id LIMIT 10 
+-->
+SELECT a.item_id , COUNT(item_id), i.title, i.detail_url,i.pic_url,price,num
+FROM acookie a, item i
+WHERE a.nick_mask =(
+SELECT nick_mask 
+FROM acookie_nickmask_nick_mapping 
+WHERE buyer_nick=#{buyer} AND seller_nick=#{seller} 
+) 
+AND i.num_iid=a.item_id  
+AND i.nick=#{seller} 
+GROUP BY item_id LIMIT 10;
+
+</select>
+
+<select  id="findConsultationHistory" parameterType="map" resultType="object[]">
+SELECT num_iid,created FROM consultation_history  WHERE  seller=#{seller} AND buyer=#{buyer} ORDER BY created DESC LIMIT 10
+</select>
+
+<select id="findLastConsultationItem" parameterType="map" resultType="long">
+SELECT num_iid FROM consultation_history WHERE seller=#{seller} AND buyer=#{buyer} ORDER BY created DESC LIMIT 1
+</select>
+
+<insert id="insertConsultation" parameterType="map" >
+INSERT INTO consultation_history  values(#{id},#{seller},#{buyer},#{numiid},NOW(),#{wangwang})
+</insert>
+
+<!-- product_name,detail_url,asking_num_iid,num_iid,pic_url,title,frequency,price -->
+<select id="findItemRelation"  parameterType="map"  resultType="object[]"> <![CDATA[
+             { CALL get_relative_product_name(#{seller},#{numiid})}
+        ]]></select>
+</mapper>

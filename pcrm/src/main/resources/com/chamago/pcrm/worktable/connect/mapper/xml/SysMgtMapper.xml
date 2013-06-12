@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="SysMgtMapper">
+	<resultMap id="result_logindetail" type="com.chamago.pcrm.worktable.connect.pojo.LoginLog" >
+	    <id column="id" property="id" jdbcType="CHAR" />
+	    <result column="nick" property="nick" jdbcType="CHAR" />
+	    <result column="sysuser" property="sysUser" jdbcType="CHAR" />
+	    <result column="starttime" property="startTime" jdbcType="TIMESTAMP" />
+	    <result column="endtime" property="endTime" jdbcType="TIMESTAMP" />
+	    <result column="created" property="created" jdbcType="TIMESTAMP" />
+	    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<insert id="insertLoginLog"   parameterType="com.chamago.pcrm.worktable.connect.pojo.LoginLog">
+		INSERT INTO login_log (`id`,`nick`,`sysuser`,`starttime`,`endtime`,`created`,`modified`)
+		VALUES(#{id},#{nick},#{sysUser},#{startTime},#{endTime},#{created},#{modified})
+	</insert>
+	
+	<update id="updateLoginDetailEndTime" parameterType="com.chamago.pcrm.worktable.connect.pojo.LoginLog">
+		update login_log set `endtime` = #{endTime},`modified` = #{modified} 
+		where nick = #{nick} and sysuser = #{sysUser} and endtime is null
+	</update>
+	
+	<select id="findSysUser" parameterType="java.util.Map" resultType="Object[]">
+		SELECT id,name,password,seller_nick 
+		FROM employee
+		WHERE EMPLOYE_NUM = #{name} and seller_nick = #{sellerNick} and status = '0'
+	</select>
+	
+	<select id="findNickSysUser" parameterType="java.util.Map" resultType="Object[]">
+		SELECT id,name,password,seller_nick 
+		FROM SYUSER
+		WHERE NAME = #{name} and seller_nick = #{sellerNick}
+	</select>
+	
+	<select id="getUserNameById" parameterType="string" resultType="Object[]">
+		SELECT name,seller_nick
+		FROM SYUSER 
+		WHERE id = #{id}
+	</select>
+	
+	<select id="findSysUserBySeller" parameterType="string" resultType="Object[]">
+		SELECT id,name
+		FROM SYUSER 
+		WHERE seller_nick = #{seller}
+	</select>
+	
+	<select id="findUserRoleByName" parameterType="string" resultType="Object[]">
+		SELECT t1.name  FROM SYROLE t1,SYUSER_SYROLE t2 ,SYUSER t3
+		WHERE t1.ID = t2.SYROLE_ID AND t2.SYUSER_ID = t3.ID and t3.NAME = #{name}
+	</select>
+	
+	
+	
+	<select id="findLoginDetail" parameterType="java.util.Map" resultMap="result_logindetail">
+		SELECT * 
+		FROM login_log 
+		WHERE nick = #{nick} and sysuser = #{sysUser} and endtime is null order by created desc
+	</select>
+	
+	<select id="findLoginDetailByNickAndDate" parameterType="java.util.Map" resultMap="result_logindetail">
+		SELECT * 
+		FROM login_log 
+		WHERE nick = #{nick} and starttime between #{startDate} and #{endDate}  order by created 
+	</select>
+	
+	<!-- user acookie -->
+	<select id="findAcookieKeywords"  resultType="Object">
+		SELECT distinct keyword 
+		FROM acookie 
+		WHERE keyword is not null
+	</select>
+	
+	<select id="getChatpeersNumsByChatId" parameterType="java.util.Map" resultType="long">
+	  	SELECT count(uid) FROM eservice_chatpeers 
+		WHERE nick = #{seller} and chat_id = #{chat_id} and date between #{startDate} and #{endDate};
+	</select>
+	
+	<select id="getEveryOneNoreplyNum" parameterType="java.util.Map" resultType="long">
+		SELECT sum(t.non_reply_num)
+		FROM eservice_noreply_master t
+		WHERE t.nick = #{seller} and t.service_staff_id = #{staffId} and t.nonreply_date between #{startDate} and #{endDate}; 
+	</select>
+	
+	<select id="getChatpeersNumsByIds" parameterType="list" resultType="object[]">
+		SELECT t1.ID,count(t2.uid) FROM SYUSER t1,eservice_chatpeers t2 
+		where t1.NAME = t2.chat_id 
+		    and t2.date = date_format(now(),'%y-%m-%d') 
+		    and t1.ID in 
+		    <foreach item="ids" index="index" collection="list"
+                    open="(" separator="," close=")">
+                   #{ids}
+         	</foreach>
+		    group by t1.ID 
+	</select>
+	
+	
+</mapper>

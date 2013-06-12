@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="KnowledgeMapper">
+	<resultMap id="result_knowledge" type="com.chamago.pcrm.worktable.knowledgebase.pojo.Knowledge" >
+	    <id column="id" property="id" jdbcType="VARCHAR" />
+	    <result column="subject_id" property="subjectId" jdbcType="VARCHAR" />
+	    <result column="item_id" property="itemId" jdbcType="INTEGER" />
+	    <result column="title" property="title" jdbcType="VARCHAR" />
+	    <result column="content" property="content" jdbcType="VARCHAR" />
+	    <result column="fileid" property="fileId" jdbcType="VARCHAR" />
+	    <result column="creator" property="creator" jdbcType="VARCHAR" />
+	    <result column="send_nums" property="sendNums" jdbcType="INTEGER" />
+	    <result column="seller_nick" property="sellerNick" jdbcType="VARCHAR" />
+	    <result column="created" property="created" jdbcType="TIMESTAMP" />
+	    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="result_knowledgeSubject" type="com.chamago.pcrm.worktable.knowledgebase.pojo.KnowledgeSubject" >
+	    <id column="id" property="id" jdbcType="INTEGER" />
+	    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+	    <result column="leaf" property="leaf" jdbcType="INTEGER" />
+	    <result column="subject" property="subject" jdbcType="VARCHAR" />
+	    <result column="creator" property="creator" jdbcType="VARCHAR" />
+	    <result column="seller_nick" property="sellerNick" jdbcType="VARCHAR" />
+	    <result column="created" property="created" jdbcType="TIMESTAMP" />
+	    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<!-- 
+	<select id="findAllKnowledge"   resultMap="result_knowledge">SELECT * FROM  knowledge_base</select>
+	 -->
+	 
+	<select id="findAllKnowledge"  parameterType="java.util.Map" resultType="Object[]">
+		SELECT t1.id,t1.title,t1.content,t1.creator,t1.seller_nick,t1.item_id,t1.send_nums,t2.id,t2.subject
+		FROM  knowledge_base t1,knowledge_subject t2 where t1.subject_id = t2.id
+	</select>
+	
+	<select id="findAllDefinedKnowledge"  parameterType="java.util.Map" resultType="Object[]">
+		SELECT t1.id,t1.title,t1.content,t1.creator,t1.seller_nick,-1,t1.send_nums
+		FROM  knowledge_defined t1
+	</select>
+	
+	<select id="findKnowledgeSubjectByParentid"  parameterType="java.util.Map" resultMap="result_knowledgeSubject">
+		SELECT * FROM  knowledge_subject 
+		where parent_id = #{parentId} and seller_nick = #{sellerNick}
+	</select>
+	
+	<select id="findSubjectAndKnowledgeCountByParentid"  parameterType="java.util.Map" resultType="Object[]">
+		select t1.id,t1.subject,t2.totalnums
+		FROM knowledge_subject t1 left join (SELECT count(*) totalnums,subject_id FROM knowledge_base t3 where 1=1 and t3.seller_nick =#{sellerNick} group by t3.subject_id ) t2
+		on t1.id=t2.subject_id WHERE t1.parent_id = #{parentId} and t2.totalnums >0 order by t2.totalnums desc; 
+	</select>
+	
+	<select id="findKnowledgeBySubjectid"  parameterType="java.util.Map" resultType="Object[]">
+		SELECT t1.id,t1.title,t1.content,t1.created,t1.item_id,t2.subject,t2.id 
+		FROM  knowledge_base t1,knowledge_subject t2 where t1.subject_id = t2.id
+		<if test="subjectId != null">
+				and t1.subject_id = #{subjectId}
+		</if>
+		and t1.seller_nick = #{sellerNick}
+		order by t1.send_nums desc,t1.modified desc
+	</select>
+	
+	<insert id="insertKnowledge"   parameterType="com.chamago.pcrm.worktable.knowledgebase.pojo.Knowledge">
+		INSERT INTO knowledge_base (`id`,`subject_id`,`title`,`content`,`fileid`,`item_id`,`creator`,`created`,`modified`,`seller_nick`)
+		VALUES(#{id},#{subjectId},#{title},#{content},#{fileId},#{itemId},#{creator},#{created},#{modified},#{sellerNick})
+	</insert>
+	
+	<insert id="insertKnowledgeDefined"   parameterType="com.chamago.pcrm.worktable.knowledgebase.pojo.Knowledge">
+		INSERT INTO knowledge_defined (`id`,`defined_type`,`title`,`content`,`creator`,`created`,`modified`,`seller_nick`)
+		VALUES(#{id},#{subjectId},#{title},#{content},#{creator},#{created},#{modified},#{sellerNick})
+	</insert>
+	
+	<insert id="insertKnowledgeSubject"   parameterType="com.chamago.pcrm.worktable.knowledgebase.pojo.KnowledgeSubject">
+		INSERT INTO knowledge_subject (`id`,`parent_id`,`subject`,`creator`,`created`,`modified`,`seller_nick`)
+		VALUES(#{id},#{parentId},#{subject},#{creator},#{created},#{modified},#{sellerNick})
+	</insert>
+	
+	<insert id="insertknowledgeDefinedSubject"   parameterType="com.chamago.pcrm.worktable.knowledgebase.pojo.KnowledgeSubject">
+		INSERT INTO knowledge_defined_subject (`id`,`subject`,`creator`,`created`,`modified`,`seller_nick`)
+		VALUES(#{id},#{parentId},#{subject},#{creator},#{created},#{modified},#{sellerNick})
+	</insert>
+	
+	<select id="findKnowledgeByProductId" parameterType="java.util.Map" resultType="object[]">
+		SELECT  t1.id,t1.title,t1.content,t1.fileid
+		FROM knowledge_base t1,knowledge_subject t2 
+		WHERE t1.subject_id = t2.id AND t1.item_id=#{productId} and t1.seller_nick = #{sellerNick} order by t1.send_nums,t1.modified desc
+	</select>
+	
+	<select id="findDefinedKnowledgeByCreator" parameterType="java.util.Map" resultType="object[]">
+		SELECT  t1.id,t1.title,t1.content
+		FROM knowledge_defined t1
+		WHERE t1.creator = #{creator} order by t1.send_nums desc,t1.modified desc
+	</select>
+	
+	<select id="findKnowledgeSubjectById" parameterType="string" resultMap="result_knowledgeSubject">
+		SELECT  *
+		FROM knowledge_subject
+		WHERE id=#{id}
+	</select>
+	
+	<select id="findSubjectByName" parameterType="java.util.Map" resultType="long">
+		SELECT  count(*)
+		FROM knowledge_subject
+		WHERE subject = #{name} and seller_nick = #{seller}
+	</select>
+	
+	<update id="updateSubjectLeaf"  parameterType="java.util.Map" >
+  		UPDATE knowledge_subject SET leaf=#{leaf} WHERE id=#{id} 
+  	</update>
+  	
+  	<update id="updateKnowledgeById" parameterType="com.chamago.pcrm.worktable.knowledgebase.pojo.Knowledge">
+		update knowledge_base set subject_id = #{subjectId}, title = #{title},content = #{content}, item_id = #{itemId}, modified = #{modified}  where id = #{id}
+	</update>
+	
+  	<update id="updateKnowledgeSubjectIdById" parameterType="java.util.Map">
+		update knowledge_base set subject_id = #{subjectId} where id = #{id}
+	</update>
+	
+	<update id="updateKnowledgeSendNumsById" parameterType="java.util.Map">
+		update knowledge_base set send_nums = send_nums+1 where id = #{id}
+	</update>
+	
+	<update id="updateKnowledgeDefinedSendNumsById" parameterType="java.util.Map">
+		update knowledge_defined set send_nums = send_nums+1 where id = #{id}
+	</update>
+	
+	<update id="updateKnowledgeSubjectById" parameterType="java.util.Map">
+		update knowledge_subject set subject = #{subject},modified = #{modified} where id = #{id}
+	</update>
+  	
+  	<delete id="deleteKnowledgeDefinedById" parameterType="string">
+		delete FROM knowledge_defined 
+		WHERE id = #{id}
+	</delete>
+	
+	<delete id="deleteKnowledgeById" parameterType="string">
+		delete FROM knowledge_base 
+		WHERE id = #{id}
+	</delete>
+	
+	<delete id="deleteKnowledgeSubjectById" parameterType="string">
+		delete FROM knowledge_subject 
+		WHERE id = #{id}
+	</delete>
+	
+	<delete id="deleteKnowledgeDefinedSubjectById" parameterType="string">
+		delete FROM knowledge_defined_subject 
+		WHERE id = #{id}
+	</delete>
+	
+	<delete id="deleteKnowledgeByIds" parameterType="list">
+		delete FROM knowledge_base 
+		WHERE id IN 
+		<foreach item="ids" index="index" collection="list"
+                    open="(" separator="," close=")">
+                   #{ids}
+         </foreach>
+	</delete>
+</mapper>

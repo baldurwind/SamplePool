@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MarketingMapper" >
+   
+<resultMap id="result_mcoupon" type="com.chamago.pcrm.marketing.pojo.MCoupon" >
+    <id column="c_id" property="id" jdbcType="BIGINT" />
+    <result column="condition" property="condition" jdbcType="BIGINT" />
+    <result column="create_channel" property="createChannel" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="denominations" property="denominations" jdbcType="BIGINT" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="seller_nick" property="sellerNick" jdbcType="CHAR" /></resultMap>
+  
+  
+<resultMap id="result_mactivity" type="com.chamago.pcrm.marketing.pojo.MActivity" >
+    <id column="a_id" property="id" jdbcType="BIGINT" />
+    <result column="url" property="url" jdbcType="CHAR" />
+    <result column="applied_count" property="appliedCount" jdbcType="BIGINT" />
+    <result column="coupon_id" property="couponId" jdbcType="BIGINT" />
+    <result column="create_user" property="createUser" jdbcType="CHAR" />
+    <result column="person_limit_count" property="personLimitCount" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="total_count" property="totalCount" jdbcType="BIGINT" />
+    <result column="a_seller_nick" property="sellerNick" jdbcType="CHAR" />
+    <association property="coupon" resultMap="result_mcoupon"></association>
+    </resultMap>
+  
+<select id="findActivity" resultMap="result_mactivity" parameterType="string" >
+SELECT  activity_id a_id, activity_url url,applied_count,create_user,person_limit_count,status,total_count,a.seller_nick a_seller_nick,
+c.condition,create_time,denominations,end_time,create_channel FROM  activity a,  coupon c 
+WHERE a.coupon_id=c.coupon_id AND  a.seller_nick=#{seller} AND  #{current} BETWEEN  create_time AND end_time   
+</select>
+  
+<select id="findBuyerCoupon" resultType="object[]"  parameterType="map">
+SELECT
+	coupon_number, denominations,`condition`,end_time , b.state
+FROM 
+	coupon_detail b INNER JOIN  coupon a ON  a.coupon_id=b.coupon_id 
+WHERE  
+	buyer_nick=#{buyernick} AND seller_nick=#{sellernick}
+</select>  
+<select id="findSellerCoupon" resultType="object[]"  parameterType="map">
+SELECT 
+	activity_id, activity_url,a.coupon_id,person_limit_count,total_count-applied_count,denominations,`condition`,end_time
+FROM 
+	activity  a INNER JOIN coupon b  ON a.coupon_id=b.coupon_id
+WHERE
+	b.seller_nick=#{sellernick} <![CDATA[AND b.create_time <= #{currentdate} AND b.end_time >= #{currentdate}]]>
+</select>  
+  
+<select id="findMeal" resultType="com.chamago.pcrm.marketing.pojo.Meal" parameterType="string">
+  SELECT  meal_id mealId,seller_nick sellerNick,meal_name mealName,meal_price mealPrice,type_postage typePostage,postage_id postageId,status,meal_memo mealMemo 
+  FROM meal_list 
+  WHERE seller_nick=#{seller_nick} AND status='VALID'</select>
+
+<select id="findMealDetail" resultType="string" parameterType="long">
+  SELECT item_id itemId  FROM meal_list_detail WHERE meal_id=#{meal_id}</select>
+
+
+
+<select id="findLimitDiscount"  resultType="com.chamago.pcrm.marketing.pojo.LimitDiscount" parameterType="map">
+  SELECT limit_discount_id limitDiscountId,limit_discount_name name,start_time startTime,item_num itemNum,end_time endTime 
+  FROM limit_discount
+  WHERE seller_nick=#{sellernick}  AND #{current} BETWEEN start_time AND end_time
+  ORDER BY endTime DESC</select>
+  
+<select id="findLimitDiscountDetail" resultType="com.chamago.pcrm.marketing.pojo.LimitDiscountDetail" parameterType="long">
+SELECT  limit_discount_id ,limit_num limitNum,item_discount itemDiscount, num_iid numIid,pic_url picUrl,price,title
+FROM item INNER JOIN limit_discount_detail ON item_id =num_iid 
+WHERE limit_discount_id=#{limitDiscountId}
+</select> 
+
+<select id="findLimitDiscountItemIdForLucene" resultType="long">
+SELECT distinct(item_id) FROM limit_discount_detail 
+</select>
+  
+</mapper>

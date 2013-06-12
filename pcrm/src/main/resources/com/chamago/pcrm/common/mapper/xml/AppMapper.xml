@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AppMapper" >
+  <resultMap id="result_app" type="com.chamago.pcrm.common.pojo.App" >
+    <id column="app_key" property="appKey" jdbcType="VARCHAR" />
+    <result column="app_secret" property="appSecret" jdbcType="VARCHAR" />
+    <result column="app_name" property="appName" jdbcType="VARCHAR" />
+    <result column="callback_url" property="callbackUrl" jdbcType="VARCHAR" />
+    <result column="notification_url" property="notificationUrl" jdbcType="VARCHAR" />
+    <result column="introduction" property="introduction" jdbcType="VARCHAR" />
+    <result column="keyword" property="keyword" jdbcType="VARCHAR" />
+    <result column="category" property="category" jdbcType="VARCHAR" />
+    <result column="target_user" property="targetUser" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="is_private" property="isPrivate" jdbcType="TINYINT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+    <result column="article_id" property="articleId" jdbcType="CHAR" />
+    <result column="item_code" property="itemCode" jdbcType="CHAR" />
+    <result column="sub_url" property="subUrl" jdbcType="CHAR" />
+  </resultMap>
+    <resultMap id="result_subscriber" type="com.chamago.pcrm.common.pojo.Subscriber" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="is_init" property="isInit" jdbcType="TINYINT" />
+    <result column="app_key" property="appKey" jdbcType="CHAR" />
+    <result column="nick" property="nick" jdbcType="CHAR" />
+    <result column="session_key" property="sessionKey" jdbcType="CHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+     <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+    <result column="deadline" property="deadline" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  
+  <select id="findAllApp"  resultMap="result_app">SELECT * FROM  taobao_app</select>
+
+<select id="findSubscriber" resultMap="result_subscriber"  parameterType="map">
+SELECT * FROM taobao_subscriber   
+<where>
+<if test="nick !=null">sellernick=#{nick}</if>
+<if test="appKey != null">app_key=#{appKey}</if>
+</where>
+  </select>
+
+
+<insert id="insertApp"   parameterType="com.chamago.pcrm.common.pojo.App">SELECT * FROM app</insert>
+
+
+<insert id="insertSubscriber" useGeneratedKeys="true" parameterType="com.chamago.pcrm.common.pojo.Subscriber">
+ <selectKey resultType="int"  keyProperty="id" >SELECT @@IDENTITY AS VALUE</selectKey> 
+INSERT INTO taobao_subscriber (`app_key`,`user_id`,`nick`,`session_key`,`created`) 
+ VALUES(#{appKey},#{userid},#{nick},#{sessionKey},NOW())</insert>
+ 
+
+  <update id="updateSessionKey"  parameterType="com.chamago.pcrm.common.pojo.Subscriber" >
+  	UPDATE taobao_subscriber SET session_key=#{sessionKey} WHERE nick=#{nick} AND app_key=#{appKey}</update>
+  
+  <insert id="replaceTopSession" parameterType="com.chamago.pcrm.common.pojo.Subscriber">
+  	replace into taobao_subscriber  (app_key,nick,session_key)  VALUES(#{appKey},#{nick},#{sessionKey}) 
+  </insert>
+  
+  <update id="updateInitSubscriber"  parameterType="map" >
+  	UPDATE taobao_subscriber SET is_init=#{isInit} WHERE nick=#{sellernick} AND app_key=#{appkey} </update>
+  
+  <select id="findAllInitShell" resultType="com.chamago.pcrm.common.pojo.InitShell">
+  SELECT id,name,script,parent_id parentId FROM init_shell</select>
+  
+  
+  
+  
+  <update id="lockInitShellSchedule" >
+ 		UPDATE init_shell_schedule SET status='running' WHERE status='init' AND app_key=#{appkey}
+  </update>
+  
+  
+  <update id="updateSession" parameterType="map">
+  UPDATE taobao_subscriber   SET session_key=#{session} WHERE nick=#{nick} AND app_key=#{appkey}
+  </update>
+  
+</mapper>

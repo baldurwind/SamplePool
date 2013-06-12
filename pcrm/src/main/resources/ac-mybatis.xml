@@ -1,0 +1,83 @@
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+ 
+   <!-- scan for mappers and let them be autowired -->
+		<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+			<property name="basePackage" value="com.chamago.pcrm.common.mapper.xml,com.chamago.pcrm.crm.mapper.xml,com.chamago.pcrm.customerservice.mapper.xml,com.chamago.pcrm.item.mapper.xml,com.chamago.pcrm.leads.behavior.mapper.xml,com.chamago.pcrm.leads.memo.mapper.xml,com.chamago.pcrm.leads.promotion.mapper.xml,com.chamago.pcrm.marketing.mapper.xml,com.chamago.pcrm.taobao.top.mapper.xml,com.chamago.pcrm.trade.mapper.xml,com.chamago.pcrm.worktable.notice.mapper.xml,com.chamago.pcrm.knowledge.mapper.xml,com.chamago.pcrm.advice.mapper.xml,com.chamago.pcrm.worktable.connect.mapper.xml" /></bean>
+		
+		 
+		 <bean  class="org.mybatis.spring.mapper.MapperFactoryBean"> 
+				<property name="sqlSessionFactory" ref="sqlSessionFactory" /> 
+				<property name="mapperInterface" value="com.chamago.pcrm.common.mapper.LkpMapper" /></bean>
+					
+		<bean  class="com.chamago.pcrm.trade.mapper.impl.TradeMapperImpl"> 
+				<property name="sqlSessionFactory" ref="sqlSessionFactory" /></bean>
+		<bean  class="com.chamago.pcrm.item.mapper.impl.ItemMapperImpl"> 
+				<property name="sqlSessionFactory" ref="sqlSessionFactory" /></bean>			
+		<bean  class="com.chamago.pcrm.marketing.mapper.impl.MarketingMapperImpl"> 
+				<property name="sqlSessionFactory" ref="sqlSessionFactory" /></bean>
+		<bean    class="com.chamago.pcrm.behavior.mapper.impl.BehaviorMapperImpl"> 
+				<property name="sqlSessionFactory" ref="sqlSessionFactory" /></bean>
+				
+		<bean  class="com.chamago.pcrm.customerservice.mapper.impl.CustomerServiceMapperImpl"> 
+				<property name="sqlSessionFactory" ref="sqlSessionFactory" /></bean>
+				
+		<bean id="reminderMapper"  class="com.chamago.pcrm.worktable.reminder.mapper.impl.ReminderMapperImpl"> 
+				<property name="sqlSessionFactory" ref="sqlSessionFactory" /></bean>
+				
+		<bean  class="com.chamago.pcrm.leads.memo.mapper.impl.LeadsMemoMapperImpl"> 
+				<property name="sqlSessionFactory" ref="sqlSessionFactory" /></bean>		
+				
+		<bean  class="com.chamago.pcrm.common.mapper.impl.AppMapperImpl"> 
+				<property name="sqlSessionFactory" ref="sqlSessionFactory1" /></bean> 
+
+		<bean  class="com.chamago.pcrm.worktable.knowledgebase.mapper.impl.KnowledgeMapperImpl"> 
+			<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		</bean>
+		
+		<bean  class="com.chamago.pcrm.worktable.notice.mapper.impl.NoticeMapperImpl"> 
+			<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		</bean>
+		
+		<bean  class="com.chamago.pcrm.worktable.performance.mapper.impl.EserviceMapperImpl"> 
+			<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		</bean>
+		
+		<bean  class="com.chamago.pcrm.worktable.performance.mapper.impl.PerformanceMapperImpl"> 
+			<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		</bean>
+		<bean  class="com.chamago.pcrm.worktable.advice.mapper.impl.AdviceMapperImpl"> 
+			<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		</bean>
+		<bean  class="com.chamago.pcrm.worktable.connect.mapper.impl.SysMgtMapperImpl"> 
+			<property name="sqlSessionFactory" ref="sqlSessionFactory" /></bean>
+		<bean  class="com.chamago.pcrm.common.mapper.impl.InitSellerMapperImpl"> 
+			<property name="sqlSessionFactory" ref="sqlSessionFactory" /></bean>
+			
+		<bean class="com.chamago.pcrm.user.mapper.impl.UserMapperImpl">
+			<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		</bean>
+</beans>
+ <!--			
+ <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${datasource.driverClassName}"/>
+        <property name="url" value="${datasource.url}"/>
+        <property name="username"  value="${datasource.username}"/>
+        <property name="password" value="${datasource.password}"/></bean> 
+ <bean id="dataSource" class="org.apache.ibatis.datasource.pooled.PooledDataSource">
+ <constructor-arg value="${datasource.driverClassName}"/>
+ <constructor-arg value="${datasource.url}"/>
+ <constructor-arg value="${datasource.username}"/>
+ <constructor-arg value="${datasource.password}"/></bean>
+   	  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+ <property name="driverClassName" value="${datasource.driverClassName}"/>
+ <property name="url" value="${datasource.url}"/>
+ <property name="username" value="${datasource.username}"/>
+ <property name="password" value="${datasource.password}"/>
+ <property name="minIdle" value="10"/>
+   </bean>		
+ -->

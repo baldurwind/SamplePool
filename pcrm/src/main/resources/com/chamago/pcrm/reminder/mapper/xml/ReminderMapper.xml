@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ReminderMapper" >
+	
+	<resultMap id="reminderResultMap" type="com.chamago.pcrm.worktable.reminder.pojo.Reminder">
+		<result column="id" property="id"/>
+		<result column="tip_type" property="tipType"/>
+		<result column="tip_time" property="tipTime"/>
+		<result column="nick" property="nick"/>
+		<result column="buyer_nick" property="buyerNick"/>
+		<result column="content" property="content"/>
+		<result column="status" property="status"/>
+	</resultMap>
+	
+	<insert id="saveReminder" parameterType="com.chamago.pcrm.worktable.reminder.pojo.Reminder">
+		INSERT INTO reminder(id, tip_type, tip_time, nick, buyer_nick, seller_nick, content, status, create_time)
+		VALUES(#{id}, #{tipType}, #{tipTime}, #{nick}, #{buyerNick}, #{sellerNick}, #{content}, 0, now());
+	</insert>
+	
+	<select id="getReminderSuccessCountByNick" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM reminder WHERE nick = #{nick} AND status = 1
+	</select>
+	
+	<select id="getReminderOverdueCountByNick" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM reminder WHERE nick = #{nick} AND status = 0 <![CDATA[ AND tip_time <= now()]]>    
+	</select>
+	
+	<select id="getReminderNoBeginCountByNick" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM reminder WHERE nick = #{nick} AND status = 0 <![CDATA[ AND tip_time > now()]]>    
+	</select>
+	
+	<select id="getReminderList" resultMap="reminderResultMap">
+		SELECT id, buyer_nick, tip_type, tip_time, nick, content, status FROM reminder WHERE nick=#{nick} AND status=#{status} ORDER BY tip_time asc LIMIT #{start}, #{end}
+	</select>
+	
+	<select id="getReminderCountByParams" resultType="int" parameterType="map">
+		SELECT COUNT(*) FROM reminder WHERE nick = #{nick} AND status = #{status}
+	</select>
+	
+	<update id="updateReminderStatus" parameterType="map">
+		UPDATE reminder SET status = #{status} WHERE id = #{id}
+	</update>
+	
+	<select id="getReminderById" parameterType="string" resultMap="reminderResultMap">
+		SELECT id, tip_type, tip_time, nick, buyer_nick, content, status FROM reminder WHERE id = #{id}
+	</select>
+	
+	<update id="updateReminder" parameterType="com.chamago.pcrm.worktable.reminder.pojo.Reminder">
+		UPDATE reminder SET tip_type = #{tipType}, tip_time=#{tipTime}, buyer_nick=#{buyerNick}, content=#{content}, modify_time=now() WHERE id=#{id} 
+	</update>
+	
+	<update id="updateReminderByLeadsMemo" parameterType="com.chamago.pcrm.worktable.reminder.pojo.Reminder">
+		UPDATE reminder SET tip_time=#{tipTime}, content=#{content}, status=#{status},modify_time=now() WHERE id=#{id}
+	</update>
+	
+	<select id="getNotReminderByCurrentNick" resultType="int" parameterType="map">
+		SELECT COUNT(*) FROM reminder WHERE nick=#{nick} <![CDATA[ AND tip_time <= #{currentDate}]]> AND status = 0
+	</select>
+</mapper>

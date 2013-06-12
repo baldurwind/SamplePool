@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AdviceMapper">
+	<resultMap id="result_advice" type="com.chamago.pcrm.worktable.advice.pojo.Advice" >
+	    <id column="id" property="id" jdbcType="CHAR" />
+	    <result column="title" property="title" jdbcType="CHAR" />
+	    <result column="content" property="content" jdbcType="CHAR" />
+	    <result column="status" property="status" jdbcType="INTEGER" />
+	    <result column="creator" property="creator" jdbcType="CHAR" />
+	    <result column="type" property="type" jdbcType="INTEGER" />
+	    <result column="score" property="score" jdbcType="FLOAT" />
+	    <result column="oriented_type" property="orientedType" jdbcType="INTEGER" />
+	    <result column="seller_nick" property="sellerNick" jdbcType="CHAR" />
+	    <result column="created" property="created" jdbcType="TIMESTAMP" />
+	    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="result_adviceType" type="com.chamago.pcrm.worktable.advice.pojo.AdviceType" >
+	    <id column="id" property="id" jdbcType="CHAR" />
+	    <result column="name" property="name" jdbcType="CHAR" />
+	    <result column="creator" property="creator" jdbcType="CHAR" />
+	    <result column="seller_nick" property="sellerNick" jdbcType="CHAR" />
+	    <result column="created" property="created" jdbcType="TIMESTAMP" />
+	    <result column="modified" property="modified" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	
+	<insert id="insertAdvice"   parameterType="com.chamago.pcrm.worktable.advice.pojo.Advice">
+		INSERT INTO worktable_advice (`id`,`title`,`content`,`creator`,`status`,`type`,`score`,`oriented_type`,`created`,`modified`,`seller_nick`)
+		VALUES(#{id},#{title},#{content},#{creator},#{status},#{type},#{score},#{orientedType},#{created},#{modified},#{sellerNick})
+	</insert>
+	
+	<insert id="insertAdviceType"   parameterType="com.chamago.pcrm.worktable.advice.pojo.AdviceType">
+		INSERT INTO worktable_advice_type (`id`,`name`,`creator`,`created`,`modified`,`seller_nick`)
+		VALUES(#{id},#{name},#{creator},#{created},#{modified},#{sellerNick})
+	</insert>
+	
+	<delete id="deleteAdviceTypeById" parameterType="string">
+		delete FROM worktable_advice_type 
+		WHERE id = #{id}
+	</delete>
+	
+	<select id="findAdvicesTypeList"  parameterType="long" resultType="object[]">
+		select t1.id,t1.name,t2.totalnums
+		FROM worktable_advice_type t1 left join (SELECT count(*) totalnums,type FROM worktable_advice t3 where t3.oriented_type=#{orientedtype} group by t3.type) t2
+		 on t1.id=t2.type; 
+	</select>
+	
+	<select id="findAdvicesTypeListBySeller"  parameterType="string" resultType="object[]">
+		select t1.id,t1.name,t2.totalnums
+		FROM (select * from worktable_advice_type where seller_nick = #{sellerNick} ) t1 left join (SELECT count(*) totalnums,type FROM worktable_advice t3 where 1=1 group by t3.type) t2
+		 on t1.id=t2.type
+	</select>
+	
+	<select id="findAdviceTypeByName" parameterType="java.util.Map" resultType="long">
+		select count(*)
+		FROM worktable_advice_type 
+		WHERE name = #{name} and seller_nick = #{seller}
+	</select>
+	
+	<select id="findGoodAdvicesCountByCreatorAndStatus"   parameterType="java.util.Map" resultType="object[]">
+		SELECT  count(*),sum(score)
+		FROM worktable_advice 
+		WHERE  creator = #{creator} and status >= #{status}
+	</select>
+	 
+	<select id="findAdvicesByOrientedTypeAndType"   parameterType="java.util.Map" resultMap="result_advice">
+		SELECT  * 
+		FROM worktable_advice 
+		WHERE  oriented_type = #{orientedType} and type = #{type} order by created desc
+	</select>
+	
+	<select id="findAdvicesByCreator"   parameterType="string" resultMap="result_advice">
+		SELECT  * 
+		FROM worktable_advice 
+		WHERE  creator = #{creator} order by created desc
+	</select>
+	 
+	<select id="findAdvicesByOrientedAndStatus"   parameterType="java.util.Map" resultMap="result_advice">
+		SELECT  * 
+		FROM worktable_advice 
+		WHERE  oriented_type = #{orientedType} and status = #{status} order by created desc
+	</select>
+	
+	<select id="findAdvicesByOrientedAndTypeAndStatus"   parameterType="java.util.Map" resultMap="result_advice">
+		SELECT  * 
+		FROM worktable_advice 
+		WHERE  1=1 
+		<if test="type != null">
+			AND type = #{type}
+		</if>
+		<if test="status != null">
+			<if test="status != 0">
+				AND status >0
+			</if>
+			<if test="status == 0">
+				AND status = 0
+			</if>
+		</if>
+		AND seller_nick = #{sellerNick}
+		order by created desc
+	</select>
+	
+	<delete id="deleteAdvicesById" parameterType="string">
+		delete FROM worktable_advice 
+		WHERE id = #{id}
+	</delete>
+	
+	<delete id="deleteAdvicesByIds" parameterType="list">
+		delete FROM worktable_advice 
+		WHERE id IN 
+		<foreach item="ids" index="index" collection="list"
+                    open="(" separator="," close=")">
+                   #{ids}
+         </foreach>
+	</delete>
+	
+	<select id="findAdvicesByIds" parameterType="list" resultMap="result_advice">
+		select * FROM worktable_advice 
+		WHERE id IN 
+		<foreach item="ids" index="index" collection="list"
+                    open="(" separator="," close=")">
+                   #{ids}
+         </foreach>
+	</select>
+	<update id="updateAdviceById" parameterType="java.util.Map">
+		update worktable_advice set type = #{type} where id = #{id}
+	</update>
+	
+	<update id="updateAdviceAdviceTypeById" parameterType="java.util.Map">
+		update worktable_advice_type set name = #{name} where id = #{id}
+	</update>
+	
+	<update id="updateAdviceStatusById" parameterType="java.util.Map">
+		update worktable_advice set `status` = #{status},`score` = #{score} where id = #{id}
+	</update>
+	 
+</mapper>

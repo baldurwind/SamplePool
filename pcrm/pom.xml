@@ -1,0 +1,378 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>pcrm</artifactId>
+	<packaging>war</packaging>
+	<name>pcrm</name>
+	<parent>
+		<groupId>com.chamago</groupId>
+		<artifactId>pcrmparent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pcrmparent/pom.xml</relativePath>
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+	
+	<build>
+        <resources>  
+            <resource>  
+                <directory>src/main/resources</directory>  
+                <filtering>true</filtering>  
+            </resource>  
+        </resources>
+	</build>
+	
+	<dependencies>
+	<dependency>
+  <groupId>fakepath</groupId>
+  <artifactId>javabase64</artifactId>
+  <version>1.3.1</version>
+</dependency>
+	<dependency>
+  			<groupId>fakepath</groupId>
+  			<artifactId>tomcat-javaee</artifactId>
+		</dependency>
+	
+	
+<dependency>
+  <groupId>fakepath</groupId>
+  <artifactId>jackson-all</artifactId>
+  <version>1.8.5</version>
+</dependency>
+	<dependency>
+	
+ 	 <groupId>fakepath</groupId>
+  	<artifactId>commons-fileupload</artifactId>
+	</dependency>
+	
+	<dependency>
+ 	 <groupId>fakepath</groupId>
+  	<artifactId>pusherletclient</artifactId>
+	</dependency>
+	
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>sshtools</groupId>
+			<artifactId>j2ssh-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>sshtools</groupId>
+			<artifactId>j2ssh-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>sshtools</groupId>
+			<artifactId>j2ssh-daemon</artifactId>
+		</dependency>
+	 	<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>  
+		
+		 <dependency>
+    	<groupId>org.springframework.security</groupId>
+    	<artifactId>spring-security-config</artifactId>
+    </dependency>	
+    
+    
+    <dependency>
+    	<groupId>org.springframework.security</groupId>
+    	<artifactId>spring-security-taglibs</artifactId>
+    </dependency>
+			<dependency>
+			<groupId>springframework</groupId>
+			<artifactId>spring-mock</artifactId>
+		</dependency>
+			<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+ 	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-core</artifactId>
+  	 </dependency>
+<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-oxm</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.opensymphony.quartz</groupId>
+			<artifactId>quartz-all</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-pool</groupId>
+			<artifactId>commons-pool</artifactId>
+		</dependency>
+
+
+
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-analyzers</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock</artifactId>
+			<type>pom</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>pcrm-taobao</groupId>
+			<artifactId>taobao-sdk-java-online_standard</artifactId>
+		</dependency>
+	
+		<dependency>
+			<groupId>aopalliance</groupId>
+			<artifactId>aopalliance</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>fakepath</groupId>
+			<artifactId>com.springsource.org.codehaus.jackson.mapper</artifactId>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>fakepath</groupId>
+			<artifactId>com.springsource.org.aopalliance</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>fakepath</groupId>
+			<artifactId>com.springsource.org.aspectj.weaver</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>fakepath</groupId>
+			<artifactId>java_memcached_release</artifactId>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.ezmorph</groupId>
+			<artifactId>ezmorph</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<classifier>jdk15</classifier>
+		</dependency>
+	
+	<dependency> 
+ 		<groupId>commons-io</groupId>
+  		<artifactId>commons-io</artifactId>
+  	</dependency>
+  	 <dependency>
+  		<groupId>commons-collections</groupId>
+  		<artifactId>commons-collections</artifactId>
+  	</dependency>
+  	<dependency>
+  		<groupId>javax.servlet</groupId>
+  		<artifactId>jstl</artifactId>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.taglibs</groupId>
+  		<artifactId>com.springsource.org.apache.taglibs.standard</artifactId>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.chamago</groupId>
+  		<artifactId>chamago_lucene</artifactId>
+  	</dependency>
+
+  	  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-orm</artifactId>
+  	</dependency>
+  	  	<dependency>
+  	  		<groupId>org.hibernate</groupId>
+  	  		<artifactId>hibernate-core</artifactId>
+  	  	</dependency>
+  	  	<dependency>
+  	  		<groupId>net.sourceforge.jtds</groupId>
+  	  		<artifactId>jtds</artifactId>
+  	  		<version>1.2.4</version>
+  	  	</dependency>
+  	  	<dependency>
+  	  		<groupId>commons-dbcp</groupId>
+  	  		<artifactId>commons-dbcp</artifactId>
+  	  		<version>1.4</version>
+  	  	</dependency>
+  	  	<dependency>
+  	  		<groupId>jtds</groupId>
+  	  		<artifactId>jtds</artifactId>
+  	  		<version>1.2</version>
+  	  	</dependency>
+  	  	<dependency>
+  	  		<groupId>org.jboss.logging</groupId>
+  	  		<artifactId>jboss-logging</artifactId>
+  	  		<version>3.1.0.CR2</version>
+  	  	</dependency>
+  	  	<dependency>
+  	  		<groupId>org.jboss.spec.javax.transaction</groupId>
+  	  		<artifactId>jboss-transaction-api_1.1_spec</artifactId>
+  	  		<version>1.0.0.Final</version>
+  	  	</dependency>
+  	  	<dependency>
+  	  		<groupId>org.javassist</groupId>
+  	  		<artifactId>javassist</artifactId>
+  	  		<version>3.15.0-GA</version>
+  	  	</dependency>
+	</dependencies>
+	
+	 <profiles>  
+ 		<profile> 
+	 		<id>prod</id> 
+	 		<activation> 
+	              <activeByDefault>true</activeByDefault>
+	 			<property> <name>env</name> <value>prod1</value> </property> 
+	 		</activation> 
+	 		<properties> 
+	 			<datasource.url><![CDATA[jdbc:mysql://pcrm.chamago.com:3306/pcrm_prod?useUnicode=true&amp;characterEncoding=UTF-8]]></datasource.url>
+	 			<datasource.username>pcrm</datasource.username>
+	 			<datasource.password>pcrm@cmg</datasource.password>
+	 			<appDatasource.url><![CDATA[jdbc:mysql://pcrm.chamago.com:3306/open?useUnicode=true&amp;characterEncoding=UTF-8]]></appDatasource.url>
+	 			<appDatasource.username>pcrm</appDatasource.username>
+	 			<appDatasource.password>pcrm@cmg</appDatasource.password>
+	 			<sypro.url><![CDATA[jdbc:mysql://pcrm.chamago.com:3306/pcrm_prod?useUnicode=true&amp;characterEncoding=UTF-8]]></sypro.url>
+	 			<sypro.username>pcrm</sypro.username>
+	 			<sypro.password>pcrm@cmg</sypro.password>
+	 			<mc.addr>pcrm.chamago.com:11211</mc.addr>
+	 			<PCRM.APPKEY>12532585</PCRM.APPKEY>
+	 			<KETTLE.PORT>22</KETTLE.PORT>
+	 			<KETTLE.HOST>cmg2.chamago.com</KETTLE.HOST>
+	 			<KETTLE.DB>pcrm_prod</KETTLE.DB>
+	 			<KETTLE.USERNAME>chamago</KETTLE.USERNAME>
+	 			<KETTLE.PASSWORD>cmg@ipo</KETTLE.PASSWORD>
+	 			<TOP.SERVER.URL>http://gw.api.taobao.com/router/rest</TOP.SERVER.URL>
+	 			<LUCENE.ROOT>/server/data/pcrm/Lucene_Root/prod</LUCENE.ROOT>
+	 			<static.resource.host>http://static.chamago.cn</static.resource.host>
+			</properties>
+		</profile>
+ 		<profile> 
+	 		<id>dev</id> 
+	 		<activation> 
+	            <activeByDefault>true</activeByDefault>
+	 			<property> <name>env</name> <value>env1</value> </property> 
+	 		</activation> 
+	 		<properties> 
+	 			<datasource.url><![CDATA[jdbc:mysql://192.168.1.222:3306/pcrm_prod?useUnicode=true&amp;characterEncoding=UTF-8]]></datasource.url>
+	 			<datasource.username>pcrm</datasource.username>
+	 			<datasource.password>pcrm@cmg</datasource.password>
+	 			
+	 			<appDatasource.url><![CDATA[jdbc:mysql://192.168.1.222:3306/open?useUnicode=true&amp;characterEncoding=UTF-8]]></appDatasource.url>
+	 			<appDatasource.username>pcrm</appDatasource.username>
+	 			<appDatasource.password>pcrm@cmg</appDatasource.password>
+	 			
+	 			<sypro.url><![CDATA[jdbc:mysql://192.168.1.222:3306/pcrm_prod?useUnicode=true&amp;characterEncoding=UTF-8]]></sypro.url>
+	 			<sypro.username>pcrm</sypro.username>
+	 			<sypro.password>pcrm@cmg</sypro.password>
+	 			<PCRM.APPKEY>12532585</PCRM.APPKEY>
+	 			<KETTLE.PORT>22</KETTLE.PORT>
+	 			<KETTLE.HOST>cmg2.chamago.com</KETTLE.HOST>
+	 			<KETTLE.DB>pcrm_dev</KETTLE.DB>
+	 			<KETTLE.USERNAME>chamago</KETTLE.USERNAME>
+	 			<KETTLE.PASSWORD>cmg@ipo</KETTLE.PASSWORD>
+	 			<TOP.SERVER.URL>http://gw.api.taobao.com/router/rest</TOP.SERVER.URL>
+	 			<LUCENE.ROOT>/server/data/pcrm/Lucene_Root/dev</LUCENE.ROOT>
+	 			<static.resource.host>http://staticdev.chamago.com</static.resource.host>
+			</properties>
+		</profile>
+		<profile> 
+	 		<id>qa</id> 
+	 		<activation> 
+	              <activeByDefault>true</activeByDefault>
+	 			<property> <name>env</name> <value>qa1</value> </property> 
+	 		</activation> 
+	 		<properties> 
+	 			<datasource.url><![CDATA[jdbc:mysql://127.0.0.1:3306/pcrm_qa?useUnicode=true&amp;characterEncoding=UTF-8]]></datasource.url>
+	 			<datasource.username>pcrm</datasource.username>
+	 			<datasource.password>pcrm@cmg</datasource.password>
+	 			
+	 			<appDatasource.url><![CDATA[jdbc:mysql://127.0.0.1:3306/open_qa?useUnicode=true&amp;characterEncoding=UTF-8]]></appDatasource.url>
+	 			<appDatasource.username>pcrm</appDatasource.username>
+	 			<appDatasource.password>pcrm@cmg</appDatasource.password>
+	 			
+	 			<sypro.url><![CDATA[jdbc:mysql://127.0.0.1:3306/pcrm_qa?useUnicode=true&amp;characterEncoding=UTF-8]]></sypro.url>
+	 			<sypro.username>pcrm</sypro.username>
+	 			<sypro.password>pcrm@cmg</sypro.password>
+	 			<PCRM.APPKEY>12532585</PCRM.APPKEY>
+	 			<KETTLE.PORT>22</KETTLE.PORT>
+	 			<KETTLE.HOST>cmg2.chamago.com</KETTLE.HOST>
+	 			<KETTLE.DB>pcrm_qa</KETTLE.DB>
+	 			<KETTLE.USERNAME>chamago</KETTLE.USERNAME>
+	 			<KETTLE.PASSWORD>cmg@ipo</KETTLE.PASSWORD>
+	 			<TOP.SERVER.URL>http://gw.api.taobao.com/router/rest</TOP.SERVER.URL>
+	 			<LUCENE.ROOT>/server/data/pcrm/Lucene_Root/qa</LUCENE.ROOT>
+	 			<static.resource.host>http://staticqa.chamago.com</static.resource.host>
+			</properties>
+		</profile>
+	</profiles>
+</project>

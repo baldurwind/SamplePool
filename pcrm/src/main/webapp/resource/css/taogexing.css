@@ -1,0 +1,353 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+/*++++++++++++++++++++++++++++login+++++++++++++++++++++++++++++++++++*/
+.login_div{ width:100%;}
+.loginContiner{ margin:0 auto; width:1000px; }
+.login_bg{background-color:#f5f5f5;}
+.loginContiner .login_logo{ padding-top:20px;}
+.loginContiner .login_logo img{ margin:0 8px 0 10px; float:left;}
+.loginContiner .login_logo span{ font-weight:bold; color:#055ccd; font-size:30px; float:left; margin-top:45px; }
+.loginContiner .login_logo b{ margin:0 5px 0 5px; color:#737476;font-size:26px;float:left; margin-top:45px;}
+.loginContiner .login_center{ width:1000px; height:348px; background:url(http://static.chamago.cn/resource/css/images/login-bj.jpg) 0 0 no-repeat; padding-bottom:10px; float:left;}
+.loginContiner .login_center .login_gw{ float:left; width:70px; height:20px; margin:283px 0 0 570px;}
+.loginContiner .login_center .loginForm{ width:314px; height:380px; padding-top:10px; background:url(http://static.chamago.cn/resource/css/images/logo-bj.gif) 0 0 no-repeat; position: relative; margin:-43px 0 0 672px;}
+.loginForm h1{ font-size:20px; font-weight:bold; color:#5e5e5e; margin:0 0 10px 20px;}
+.loginForm .login_k{ width:285px; margin:0 0 0 25px;}
+.loginForm .login_sr{ float:left; margin-top:2px; width:280px;}
+.loginForm .login_sr span{ float:left; text-align:right; width:60px; color:#404040; font-size:14px; font-weight:bold;line-height:24px; margin-right:15px;}
+.loginForm .login_sr input{ width:190px; float:left; height:24px; border:1px solid #c8c8c8; line-height:24px;}
+.loginForm .login_sr input#yzm{ width:75px;}
+.loginForm .login_sr div{ width:100px; line-height:24px; color:#FD9500; float:left; margin-left:6px}
+.loginForm .login_erro{ float:left; margin:0 0 0 77px;height:18px; width:114px; display:inline;}
+.loginForm .login_erro span{ line-height:18px; _line-height:20px; color:#FD9500;}
+/*.loginForm .login_erro.erro_username{ background:url(http://static.chamago.cn/resource/css/images/prompt-img.gif) 0 0 no-repeat;}
+.loginForm .login_erro.erro_password{ background:url(http://static.chamago.cn/resource/css/images/prompt-img.gif) 0 -23px no-repeat;}*/
+.loginForm .login_yzm_prompt{ float:left; margin:0 0 0 75px;  display:inline; color:#b2b2b2;}
+.loginForm .login_yzm_prompt b{ color:#fd9500;}
+.loginForm .login_yzm{ float:left; margin:5px 0 0 75px; padding-bottom:7px;_padding-bottom:7px; display:inline;}
+.loginForm .login_yzm img{border:1px solid #ccc; width:80px; height:35px; float:left;}
+.loginForm .login_yzm span{ float:left; color:#404040; margin:10px 4px 0 10px;}
+.loginForm .login_yzm label{ float:left; color:#055ccd; cursor:pointer; margin-top:10px;}
+.loginForm .login_password_choose{ float:left; margin:0 0 0 78px; padding-bottom:5px;_padding-bottom:4px; color:#b2b2b2; width:190px; display:inline;}
+.loginForm .login_password_choose input{ float:left; width:13px; height:13px; margin:2px 7px 0 0;}
+.loginForm .login_password_prompt{ float:left; margin:0 0 0 75px; padding-bottom:8px;_padding-bottom:5px; display:inline;}
+.loginForm .login_password_prompt img{ float:left;}
+.loginForm .login_password_prompt span{ color:#fd9500; line-height:21px; margin-left:4px;}
+.loginForm .login_btn{ margin:0 0 0 75px;}
+.loginForm .login_btn input{ width:192px; height:43px; background:url(http://static.chamago.cn/resource/css/images/login-btn.gif); border:0; cursor:pointer;}
+.loginContiner .login_about{ padding-bottom:15px; width:1000px; height:144px; background:url(http://static.chamago.cn/resource/css/images/about-img.jpg) 0 0 no-repeat;}
+.loginContiner .login_foot{ padding-top:10px;}
+.loginContiner .login_foot img{ float:left; margin:0 10px;}
+.loginContiner .login_foot li{ margin-top:10px; color:#ababab;}
+.loginContiner .login_foot li.color_g{ color:#d5d5d5;}
+/*++++++++++++++++++++++++++++end_login+++++++++++++++++++++++++++++++*/
+
+
+/*错误信息*/
+.loginContiner .error{ width:1000px; height:329px; background:url(http://static.chamago.cn/resource/css/images/error-bj.gif) no-repeat; margin-top:30px; padding-bottom:15px; float:left;}
+.loginContiner .error img{ float:left; margin:40px 0 0  85px; display:inline;}
+.loginContiner .error ul{ float:left; width:300px; margin:50px 0 0 50px;display:inline;}
+.loginContiner .error ul li{ float:left; width:300px; line-height:22px;}
+.loginContiner .error ul li a{ color:#055bcc; margin:0 5px;}
+
+/* 用户管理 */
+.closeBtnTR{ height:25px; position:absolute; top:5px; right:10px; background:url(http://static.chamago.cn/resource/images/closeTop.png) no-repeat; text-indent:26px; line-height:25px; cursor:pointer}
+.usercontrol{}
+.usercontrol h2{ font-size:16px; font-weight:bold;}
+
+/* 角色组添加 */
+.addroles{width:360px; height:210px; border:1px solid #666; background-color:#ffffff;border-radius:3px; box-shadow:0 0 5px #333333;}
+.addroles h2{ font-weight:bold; font-size:14px; padding-top:15px; margin:0 0 20px 13px; }
+.addroles p{ margin:0 0 5px 15px;}
+.addroles .addroles_input{ margin:0 0 30px 15px;}
+.addroles .addroles_input input{ width:310px; height:25px; line-height:25px;}
+.addroles .addroles_btn{ margin:0 0 0 100px;}
+.addroles .addroles_btn input{ width:71px; height:31px; background:url(http://static.chamago.cn/resource/images/samll-btn.gif) no-repeat; text-align:center; border:none; cursor:pointer; margin-right:10px;}
+.addroles_shouhou{width:360px; height:300px; border:1px solid #666; background-color:#ffffff;border-radius:3px; box-shadow:0 0 5px #333333;}
+.addroles_shouhou h2{ font-weight:bold; font-size:14px; padding-top:15px; margin:0 0 20px 13px; }
+.addroles_shouhou p{ margin:0 0 5px 15px;}
+.addroles_shouhou .addroles_shouhou_input{ margin:0 0 20px 15px;}
+.addroles_shouhou .addroles_shouhou_input input{ width:310px; height:25px; line-height:25px;}
+.addroles_shouhou .addroles_shouhou_btn{ margin:0 0 0 100px;}
+.addroles_shouhou .addroles_shouhou_btn input{ width:71px; height:31px; background:url(http://static.chamago.cn/resource/images/samll-btn.gif) no-repeat; text-align:center; border:none; cursor:pointer; margin-right:10px;}
+
+
+
+/*用户添加*/
+.adduser{width:450px; border:1px solid #666; background-color:#ffffff;border-radius:3px; box-shadow:0 0 5px #333333;}
+.adduser h2{ font-weight:bold; font-size:14px; padding-top:15px; margin:0 0 20px 13px; }
+.adduser .adduser_entering{ margin:0 15px 20px 15px; display:inline;}
+.adduser .adduser_entering li{ float:left; width:180px; margin:0 20px 5px 0; display:inline;}
+.adduser .adduser_entering li input{ width:180px; height:24px; line-height:24px;}
+.adduser .groupsbelonged{ margin:0 15px 30px 15px; width:420px; display:inline;}
+.adduser .groupsbelonged p{ margin-bottom:10px;font-weight:bold}
+.adduser .groupsbelonged ul{ float:left;}
+.adduser .groupsbelonged ul li{ float:left; margin-right:15px; line-height:14px;}
+.adduser .groupsbelonged ul li input{ width:14px; margin-right:3px;}
+.adduser .userrole{ margin:0 15px 25px 15px;}
+.adduser .userrole p{  font-weight:bold}
+.adduser .userrole p span{ text-decoration:underline; font-weight:300}
+.adduser .userrole ul { float:left; margin-bottom:0;}
+.adduser .userrole ul li{height:30px; cursor:pointer; line-height:30px; padding-right:10px; float:left;}
+.adduser .userrole ul li input{ vertical-align:middle;}
+.adduser .userrole ul li label{ vertical-align:middle; padding-left:3px;}
+.adduser .userrole .userrole_choose{ font-weight:bold; border:1px solid #ff9933!important;}
+.adduser .adduser_btn{ margin:0 0 40px 150px;}
+.adduser .adduser_btn input{ width:71px; height:31px; background:url(http://static.chamago.cn/resource/images/samll-btn.gif) no-repeat; text-align:center; border:none; cursor:pointer; margin-right:10px;}
+
+/* 用户创建成功 */
+.addsucceed{width:450px; border:1px solid #666; background-color:#ffffff;border-radius:3px; box-shadow:0 0 5px #333333;}
+.addsucceed h2{ font-weight:bold; font-size:14px; padding-top:15px; margin:0 0 20px 13px; }
+.addsucceed p{ text-align:center; font-size:14px; margin:0 0 15px 0;}
+.addsucceed .addsucceed_message{ border:1px solid #666; width:380px; height:70px; margin:0 0 30px 35px;}
+.addsucceed .addsucceed_message div{ float:left; margin:25px 0 0 50px;}
+.addsucceed .addsucceed_message div span{ margin-right:5px;}
+.addsucceed .addsucceed_message div input{ width:71px; height:21px; background:url(http://static.chamago.cn/resource/images/copy-btn.gif) no-repeat; text-align:center; border:none; cursor:pointer; margin-right:10px; color:#fff;}
+.addsucceed .addsucceed_btn{ margin:0 0 40px 190px;}
+.addsucceed .addsucceed_btn input{ width:71px; height:31px; background:url(http://static.chamago.cn/resource/images/samll-btn.gif) no-repeat; text-align:center; border:none; cursor:pointer; margin-right:10px;}
+
+/*修改基本信息*/
+.editUserBase{width:450px; border:1px solid #666; background-color:#ffffff;border-radius:3px; box-shadow:0 0 5px #333333;}
+.editUserBase h3.title{ font-weight:bold; padding:10px 0; text-indent:10px;}
+.editUserBase h4.tit{  padding:5px 0; text-indent:10px;font-weight:bold;}
+.editUserBase .uploadImag{ padding-left:10px; float:left}
+.editUserBase .uploadImag img{ width:70px; height:70px; float:left;}
+.editUserBase .editPass{ padding:10px 10px; float:left; width:400px;}
+.editUserBase table tr td{ padding:5px 0}
+  div.submitPanel{ padding:20px 0; text-align:center; clear:both}
+  div.submitPanel input{width:71px; height:31px; background:url(http://static.chamago.cn/resource/images/samll-btn.gif) no-repeat; text-align:center; border:none; cursor:pointer; margin-right:10px}
+/*修改角色信息*/
+.editRole .groupsbelonged{ margin:0 15px 30px 0; width:420px; display:inline;}
+.editRole .groupsbelonged p{ margin-bottom:10px;font-weight:bold}
+.editRole .groupsbelonged ul{ float:left;}
+.editRole .groupsbelonged ul li{ float:left; margin-right:15px; line-height:14px;}
+.editRole .groupsbelonged ul li input{ width:14px; margin-right:3px;}
+.editRole .userrole{ margin:0 15px 25px 0;}
+.editRole .userrole p{  font-weight:bold}
+.editRole .userrole p span{ text-decoration:underline; font-weight:300}
+.editRole .userrole ul { float:left; margin-bottom:0;}
+.editRole .userrole ul li{height:30px; cursor:pointer; line-height:30px; padding-right:10px; float:left;}
+.editRole .userrole ul li input{ vertical-align:middle; margin-right:3px;}
+/*所有角色*/
+.rightDataManage{}
+.rightDataManage h2{ font-size:20px; font-weight:bold;}
+.rightDataManage .controlPanel{ height:25px; padding:10px 0; line-height:23px;}
+.rightDataManage .controlPanel p.selectForm{  float:right;}
+.rightDataManage .controlPanel p.selectForm input.selectInput{ width:150px; height:23px; margin-right:10px;}
+.rightDataManage .controlPanel p.selectForm input.selectBtn{ width:60px; height:23px; text-align:center;}
+.rightDataManage .controlPanel p.selectForm input.newadd{ width:65px; height:23px; text-align:center;}
+.rightDataManage .dataContiner{}
+.rightDataManage .dataContiner table tr td{ padding:6px 8px;border-bottom:1px solid #ccc;}
+.rightDataManage .dataContiner table tr.head td{  background:#e4e4e4; border-bottom:1px solid #333; font-weight:bold;}
+.dataContiner  .userNameModule{ height:70px; float:left}
+.dataContiner  .userNameModule img{ width:68px; height:68px; border:1px solid #666; overflow:hidden; float:left;}
+.dataContiner  .userNameModule span{ display:block; width:100px; margin:auto 10px;  float:left;}
+.dataContiner  .help{ width:83px; height:22px; line-height:22px; color:#FFFFFF; font-weight:bold; text-align:center; background:url(http://static.chamago.cn/resource/images/qxpzBtn.png) no-repeat; cursor:pointer; float:left; margin-right:5px; margin:4px 0 4px 0;}
+
+.dataContiner div.pager{ padding:10px 30px 0 0; text-align:right;}
+.dataContiner span.isSj{ padding-right:30px; background:url(http://static.chamago.cn/resource/images/dataTableSj.png) right  2px no-repeat; cursor:pointer}
+/*所有角色 面板*/
+.rolePubPanel{width:400px; border:1px solid #999; border-radius:3px; box-shadow:0 0 5px #333333; background:#FFFFFF; padding:5px;}
+.rolePubPanel .topInfo{  padding:10px 5px; overflow:hidden;}
+.rolePubPanel .topInfo span{ padding-right:20px;}
+.rolePubPanel h3.title{ padding:0 5px; height:29px; line-height:29px; border-top:1px solid #CCC; border-bottom:1px solid #CCC; background:url(http://static.chamago.cn/resource/images/rolepanel-header.png) repeat-x; font-size:14px}
+.rolePubPanel .content{ padding:10px 5px;}
+.rolePubPanel .content .tree{}
+.rolePubPanel .pubBtnCon{ text-align:center; padding:10px 0;}
+.rolePubPanel .pubBtnCon .pubBtn{ width:71px; height:31px; background:url(http://static.chamago.cn/resource/images/samll-btn.gif) no-repeat; text-align:center; line-height:31px; border:none; cursor:pointer; margin-right:10px;}
+
+.siftPanel{ padding:10px; border:1px solid #CCC; background:#FFFFFF;}
+.siftPanel ul{}
+.siftPanel ul li{ height:20px; line-height:20px;}
+
+/*客服建议*/
+.rightSuggestManage{}
+.rightSuggestManage h2{ font-size:20px; font-weight:bold;}
+.rightSuggestManage h2 span{ font-weight:normal!important;}
+.rightSuggestManage .suggestPanel{ height:25px; padding:10px 0; line-height:23px;}
+.rightSuggestManage .suggestPanel .suggestoperate{ float:left;}
+.rightSuggestManage .suggestPanel .suggestoperate input{ margin:0 5px 0 5px;}
+.rightSuggestManage .suggestPanel .suggestoperate a{ margin-right:25px;}
+.rightSuggestManage .suggestPanel .suggestoperate select{ padding:2px;}
+.rightSuggestManage .suggestPanel .suggestscreen{ float:right; border:1px solid #666666;  width:190px;}
+.rightSuggestManage .suggestPanel .suggestscreen li{ float:left; color:#666666;}
+.rightSuggestManage .suggestPanel .suggestscreen li a{ display:block; padding:0 18px;}
+.rightSuggestManage .suggestPanel .suggestscreen li a:hover , .suggestscreen_choose{ font-weight:bold!important; text-decoration:none;}
+.rightSuggestManage .dataContiner{}
+.rightSuggestManage .dataContiner .td-hover{ background:#CCFFFF}
+.dataContiner a,.dataContiner a:visited{ color:#333333; text-decoration:none}
+.dataContiner a:hover{ color:#F60;text-decoration:none}
+.rightSuggestManage .dataContiner table tr td{ padding:8px;}
+.rightSuggestManage .dataContiner table tr.head td{ background:#e4e4e4; border-bottom:1px solid #333; font-weight:bold;}
+.rightSuggestManage .dataContiner table tr.read td{ background:#f4f4f4;border-bottom:1px solid #333;}
+.rightSuggestManage .dataContiner table tr.unread td{ background-color:#FFFF99;}
+.rightSuggestManage .dataContiner table tr.suggestDetail td{ background-color:#f1f1f1;}
+.rightSuggestManage .dataContiner .dataContinerOperate{}
+.rightSuggestManage .dataContiner .dataContinerOperate a{ margin-right:10px;}
+.rightSuggestManage .dataContiner .dataContinerOperate a:hover , .dataContinerOperate_choose{ text-decoration:none;font-weight:bold!important;}
+.suggestDetail .suggestDetail_img{ float:left; border:1px solid #333; width:68px; height:68px; margin:10px 0 0 10px; display:inline;}
+.suggestDetail .suggestDetail_r{ float:left; margin:20px 0 0 0;}
+.suggestDetail_r .suggestDetail_nr{ height:70px;}
+.suggestDetail_r .suggestDetail_message{ margin:0 0 10px 0;}
+.suggestDetail_r .suggestDetail_message li{ float:left; margin:0 25px 10px 0;}
+.suggestDetail_r .suggestDetail_message li .jypf{ float:left; margin-right:10px;}
+.suggestDetail_r .suggestDetail_message li select{ float:left;}
+.suggestDetail_r .suggestDetail_message li label{ float:left; margin-left:15px;}
+.suggestDetail_r .suggestDetail_message li input{ margin-right:3px; width:14px; height:14px; float:left;margin-top:2px\9;*margin-top:2px; _margin-top:2px;}
+.suggestDetail_message .wijmo-wijrating{ float:left;}
+
+/*模块管理*/
+.module_manage{width:350px; border:1px solid #666; background-color:#ffffff;border-radius:3px; box-shadow:0 0 5px #333333; padding-bottom:20px;}
+.module_manage h2{ font-weight:bold; font-size:14px; padding-top:15px; padding-left:13px; }
+.module_manage .ztree{overflow-y:scroll; padding-left:15px;}
+.module_manage .ztree li button.add {margin-left:2px; margin-right: -1px; background-position:-144px 0; vertical-align:top; *vertical-align:middle}
+
+/*售后问题管理*/
+.rightSeviceManage{}
+.rightSeviceManage i{ background:url(http://static.chamago.cn/resource/images/servicetips.png) no-repeat; width:11px; height:11px; display:inline-block; margin-left:5px;}
+.rightSeviceManage i.yellowico{ background-position:0 0;}
+.rightSeviceManage i.greenico{ background-position:-11px 0;}
+.rightSeviceManage i.redico{ background-position:-22px 0;}
+.rightSeviceManage h2{ font-size:20px; font-weight:bold;}
+.rightSeviceManage h2 span{ font-weight:normal!important;}
+.rightSeviceManage .sevicePanel{ height:25px; padding:10px 0; line-height:23px;}
+.rightSeviceManage .sevicePanel .seviceoperate{ float:left;}
+.rightSeviceManage .sevicePanel .seviceoperate input{ margin:0 5px 0 5px;}
+.rightSeviceManage .sevicePanel .seviceoperate a{ margin-right:25px;}
+.rightSeviceManage .sevicePanel .seviceoperate select{ padding:2px;}
+.rightSeviceManage .sevicePanel .sevicescreen{ float:right; border:1px solid #666666;  width:330px; margin-right:10px;}
+.rightSeviceManage .sevicePanel .sevicescreen li{ float:left; color:#666666;}
+.rightSeviceManage .sevicePanel .sevicescreen li i{ margin-left:5px; display:inline-block;}
+.rightSeviceManage .sevicePanel .sevicescreen li a{ display:block; padding:0 18px;}
+.rightSeviceManage .sevicePanel .sevicescreen li a:hover , .sevicescreen_choose{ font-weight:bold!important; text-decoration:none;}
+.rightSeviceManage .dataContiner{}
+.rightSeviceManage .dataContiner .td-hover{ background:#CCFFFF}
+.dataContiner a,.dataContiner a:visited{ color:#333333; text-decoration:none}
+.dataContiner a:hover{ color:#F60;text-decoration:none}
+.rightSeviceManage .dataContiner table tr td{ padding:8px;}
+.rightSeviceManage .dataContiner table tr.head td{ background:#e4e4e4; border-bottom:1px solid #999; font-weight:bold;}
+.rightSeviceManage .dataContiner table tr.read td{ background:#DADADA;border-bottom:1px solid #999;}
+.rightSeviceManage .dataContiner table tr.unread td{ background-color:#FFFFDF;}
+.rightSeviceManage .dataContiner table tr.seviceDetail td{ background-color:#f1f1f1;}
+.rightSeviceManage .dataContiner table tr.seviceDetail td .seviceDetail_table tr td,.rightSeviceManage .dataContiner table tr.seviceDetail td .submitForm tr td{ background-color:#FFFFFF;}
+.rightSeviceManage .dataContiner .dataContinerOperate{}
+.rightSeviceManage .dataContiner .dataContinerOperate a{ margin-right:10px;}
+.rightSeviceManage .dataContiner .dataContinerOperate a:hover , .dataContinerOperate_choose{ text-decoration:none;font-weight:bold!important;}
+.seviceDetail .seviceDetail_table{ border-bottom:1px solid #D7D7D7; border-right:1px solid #D7D7D7; margin-top:12px;}
+.seviceDetail .seviceDetail_table tr td.sevice_title{ background:url(http://static.chamago.cn/resource/css/images/gradiant_01.jpg) repeat-x #FFF; border-bottom:1px solid #CCC; text-align:center;}
+.seviceDetail .seviceDetail_table tr td{ border-top:1px solid #D7D7D7; border-left:1px solid #D7D7D7; padding:2px 5px; background-color:#FFFFFF;}
+.seviceDetail .seviceDetail_table tr td i{ margin-top:3px;}
+.seviceDetail .submitForm{margin-top:10px; width:96%;}
+.seviceDetail .submitForm ul{ height:22px;}
+.seviceDetail .submitForm ul li{ height:20px; line-height:20px;float:left; margin-right:1px;margin-left:0px;   padding:0 20px 0 15px; border:1px solid #f2f2f2; background:#bebebe url(../../images/service_sj.png) right no-repeat; cursor:pointer; font-weight:bold; display:inline}
+.seviceDetail .submitForm ul li.click{ background-color:#fff; border:1px solid #CCC; border-bottom:none; height:21px;  line-height:20px; position:relative; top:1px;}
+.seviceDetail .submitForm div.serChuliFrorm{ border:1px solid #CCC;  padding:10px; background-color:#fff; width:380px;}
+.seviceDetail .submitForm div.serChuliFrorm  p{ padding:15px 0 0 15px;}
+.seviceDetail .submitForm div.serChuliFrorm span.fujian{ background:url(http://static.chamago.cn/resource/images/uploader.gif) no-repeat;  padding-left:20px;}
+.seviceDetail .submitForm input.btn{ width:71px; height:31px; background:url(http://static.chamago.cn/resource/images/samll-btn.gif) no-repeat; line-height:31px; border:none; cursor:pointer;}
+/*售后按钮*/
+.sevicebtn{ display:block; width:71px; line-height:21px; height:21px; cursor:pointer; font-size:13px; color:#FFFFFF; font-weight:bold; text-align:center; background:url(http://static.chamago.cn/resource/css/images/btn_color.png) no-repeat;}
+.sevicebtn_green{ background-position:0 0;}
+.sevicebtn_blue{ background-position:0 -42px;}
+.sevicebtn_orange{ background-position:0 -21px;} 
+
+/*知识库*/
+.knowledge_jia{ float:right; padding-right:10px;}
+table tr.knowledge_detail td{ background-color:#f1f1f1;}
+/*添加知识库*/
+.knowledge_add{ width:96%; margin:0 auto;}
+.knowledge_add .knowledge_tips{ padding:10px 0;}
+.knowledge_add ul.formdecorator{ width:100%;}
+.knowledge_add ul.formdecorator li{  }
+.knowledge_add ul.formdecorator li:after{clear: both;content: ".";display: block;height: 0;visibility: hidden;}
+.knowledge_add ul.formdecorator li span{ float:left; display:block; width:60px; text-align:right;}
+.knowledge_add ul.formdecorator li input,.knowledge_add ul.formdecorator li select,.knowledge_add ul.formdecorator li textarea{ float:left; margin-left:6px!important; *margin-left:3px;}
+.knowledge_add ul.formdecorator li textarea{ width:290px;}
+.knowledge_add ul.formdecorator li .knowledge_search{ height:36px; border-bottom:1px solid #CCC; background-color:#f2f2f2; text-align:right; padding-right:15px; padding-top:6px;}
+.knowledge_add ul.formdecorator li .knowledge_search input{ border:1px solid #CCC; width:155px; line-height:28px; height:28px; font-size:14px; color:#a7a7a7; font-weight:bold; float:none;}
+
+.knowledge_pro{  padding:8px 0 8px 0; width:480px;}
+.knowledge_pro p.leftimg{ width:60px; height:60px; border:1px solid #999; overflow:hidden; float:left; margin:5px; _display:inline;}
+.knowledge_pro p.leftimg img{ width:100%; height:100%; float:left;}
+.knowledge_pro div.rightInfo{ float:left; width:340px;}
+.knowledge_pro div.rightInfo h4.cptit{ font-weight:bold; line-height:20px;}
+.knowledge_pro div.rightInfo ul.parameterList{}
+.knowledge_pro div.rightInfo ul.parameterList li{ line-height:21px; height:21px; margin-top:8px; clear:both;}
+.knowledge_pro div.rightInfo ul.parameterList li span{ float:left;}
+.knowledge_pro div.rightInfo ul.parameterList li span.spacing{ letter-spacing:5px;}
+.knowledge_pro div.rightInfo ul.parameterList li a,
+.knowledge_pro div.rightInfo ul.parameterList li a:visited,
+.knowledge_pro div.rightInfo ul.parameterList li a:hover{ float:left; border:1px solid #C9C9C9; line-height:19px; height:19px; padding:0 5px; margin-right:6px; text-decoration:none; color:#333;}
+.knowledge_pro div.rightInfo ul.parameterList li strong,
+.knowledge_pro div.rightInfo ul.parameterList li p{ padding-right:10px;}
+.knowledge_pro div.rightInfo ul.parameterList li a.xuanzhong,
+.knowledge_pro div.rightInfo ul.parameterList li a.xuanzhong:visited{ border:1px solid #EB4924;}
+/*知识库面板*/
+.knowledge_panel{width:426px; padding-bottom:15px; border:1px solid #666; background-color:#ffffff;border-radius:3px; box-shadow:0 0 5px #333333;}
+.knowledge_panel h2{ font-weight:bold; font-size:14px; padding-top:15px; margin:0 0 20px 13px; }
+.knowledge_panel p{ margin:0 0 5px 15px;}
+.knowledge_panel .knowledge_panel_input{ margin:0 0 30px 15px;}
+.knowledge_panel .knowledge_panel_input input{ width:310px; height:25px; line-height:25px;}
+.knowledge_panel .knowledge_panel_btn{ margin:0 0 0 100px;}
+.knowledge_panel .knowledge_panel_btn input{ width:71px; height:31px; background:url(http://static.chamago.cn/resource/images/samll-btn.gif) no-repeat; text-align:center; border:none; cursor:pointer; margin-right:10px;}
+.knowledge_panel .knowledge_prolist{ margin-top:10px; width:98%;}
+.knowledge_panel .knowledge_prolist .sp_des{ padding:8px; width:240px;}
+.knowledge_panel .knowledge_prolist .sp_des img{ float:left; margin-right:8px; margin-bottom:8px; border:1px solid #CCC; width:50px; height:50px;}
+.knowledge_panel .knowledge_prolist .sp_des p{ line-height:18px; font-size:12px;}
+.knowledge_panel .knowledge_prolist a.sp_desbtn,.knowledge_panel .knowledge_prolist a.sp_desbtn:link,.knowledge_panel .knowledge_prolist a.sp_desbtn:visited,.knowledge_panel .knowledge_prolist a.sp_desbtn:hover{background-color:#999; color:#FFFFFF; font-size:12px; padding:0 10px; cursor:pointer; border-radius:18px; text-decoration:none;}
+.knowledge_panel .knowledge_prolist a.sp_desbtn2,.knowledge_panel .knowledge_prolist a.sp_desbtn2:link,.knowledge_panel .knowledge_prolist a.sp_desbtn2:visited,.knowledge_panel .knowledge_prolist a.sp_desbtn2:hover{background-color:#0066CC;color:#FFFFFF; font-size:12px; padding:0 10px; cursor:pointer; border-radius:18px; text-decoration:none;}
+.knowledge_panel .knowledge_search{ height:36px; border-bottom:1px solid #CCC; background-color:#f2f2f2; text-align:right; padding-right:15px; padding-top:6px;}
+.knowledge_panel li .knowledge_search input{ border:1px solid #CCC; width:155px; line-height:28px; height:28px; font-size:14px; color:#a7a7a7; font-weight:bold; float:none;}
+
+/*变灯时间设置*/
+.set_deng{ margin-top:12px;}
+.set_deng i,.setdeng_panel i{ background:url(http://static.chamago.cn/resource/images/servicetips.png) no-repeat; width:11px; height:11px; display:inline-block; margin-right:5px;}
+.set_deng i.redico,.setdeng_panel i.redico{ background-position:-22px 0;}
+.set_deng i.yellowico,.setdeng_panel i.yellowico{ background-position:0 0;}
+.set_deng i.greenico,.setdeng_panel i.greenico{ background-position:-11px 0;}
+.set_deng table tr td{ text-align:center;}
+.set_deng table tr td.dataContinerOperate a{ margin-right:10px;}
+.setdeng_panel{width:360px; height:210px; border:1px solid #666; background-color:#ffffff;border-radius:3px; box-shadow:0 0 5px #333333;}
+.setdeng_panel h2{ font-weight:bold; font-size:14px; padding-top:15px; margin:0 0 20px 13px; }
+.setdeng_panel .setdeng_panel_btn{ margin:0 0 0 100px;}
+.setdeng_panel .setdeng_panel_btn input{ width:71px; height:31px; background:url(http://static.chamago.cn/resource/images/samll-btn.gif) no-repeat; text-align:center; border:none; cursor:pointer; margin-right:10px;}
+.setdeng_panel ul{ margin:0 0 20px 15px;}
+.setdeng_panel ul li{ margin-bottom:15px;}
+.setdeng_panel ul li input{ width:40px;}
+
+.dataContiner table tr.head td{ background:#a6cef2!important; border-bottom:1px solid #ccc; font-weight:bold;}
+.dataContiner table tr{}
+.dataContiner table tr.unread td{ background-color:#FFFFE8!important;}
+.dataContiner table tr.head:hover{background:#a6cef2!important;}
+.dataContiner table tr:hover{ background:#FFFFE8!important}
+.PUB_oddTR{ background-color:#F5FAFE!important;}
+
+/*public table style*/
+.publicTableStyle{}
+.publicTableStyle tr td{padding: 5px 8px;}
+
+/*面板分页*/
+.back_pubPager{ height:26px; padding:10px 0; width:220px; float: right; line-height: 26px; }
+.back_pubPager p{ width:65px; height:22px; float:left; background:url(http://static.chamago.cn/resource/admin/images/pager.png) no-repeat; background-position:-1px -23px; color:#FFFFFF; text-align:center; line-height:22px; font-weight:bold; padding:0!important; margin:auto 3px!important;cursor:pointer}
+.back_pubPager p.disable{ background-position:-1px -1px; color:#666666; cursor: default;}
+.back_pubPager span{padding: 0 3px}
+
+.ui-pager2-continer{ padding:20px 0;}
+.ui-pager2{ font-size:12px;}
+.ui-pager2 ul{ float:right; height:24px; overflow:hidden; margin-right: 100px;}
+.ui-pager2 ul li{ float:left; cursor:pointer;height:24px; line-height:24px; text-align:center; margin-left:2px;}
+.ui-pager2 ul li.ui-pager2-step{ padding: 0  12px 0 5px; background:url(http://static.chamago.cn/resource/admin/images/ui-pager-bg-split.png) right no-repeat;}
+.ui-pager2 ul li.ui-pager2-step select{ height:20px; margin-top:2px;}
+.ui-pager2 ul li.ui-pager2-count{padding: 0 12px  ; background:url(http://static.chamago.cn/resource/admin/images/ui-pager-bg-split.png) right no-repeat; }
+.ui-pager2 ul li.ui-pager2-firstPage{ width:52px; height:24px;  color:#3266cb;}
+.ui-pager2 ul li.ui-pager2-prePage{ width:56px; height:24px;  color:#3266cb; background:url(http://static.chamago.cn/resource/admin/images/ui-pager.png) no-repeat; background-position:0 3px; text-align:left; text-indent:12px}
+.ui-pager2 ul li.ui-pager2-nextPage{ width:56px; height:24px;  color:#3266cb;background:url(http://static.chamago.cn/resource/admin/images/ui-pager.png) right -18px no-repeat; text-align:left; text-indent:8px;  }
+.ui-pager2 ul li.ui-pager2-lastPage{ width:52px; height:24px;color:#3266cb; }
+.ui-pager2 ul li.ui-pager2-firstPage-disable{ width:52px;  height:24px; color:#c2c2c2; }
+.ui-pager2 ul li.ui-pager2-prePage-disable{ width:56px;  height:24px; color:#c2c2c2;background:url(http://static.chamago.cn/resource/admin/images/ui-pager.png) no-repeat; text-align:left; text-indent:12px;background-position:0 -38px; }
+.ui-pager2 ul li.ui-pager2-nextPage-disable{ width:56px;  height:24px;color:#c2c2c2;background:url(http://static.chamago.cn/resource/admin/images/ui-pager.png) right -58px no-repeat;text-align:left; text-indent:8px; }
+.ui-pager2 ul li.ui-pager2-lastPage-disable{ width:52px; height:24px;color:#c2c2c2;}
+.ui-pager2 ul li.ui-pager2-go{ width:75px; height:24px; overflow:hidden; background:url(http://static.chamago.cn/resource/admin/images/ui-pager-bg-split.png)  no-repeat; padding:0 10px;}
+.ui-pager2 ul li.ui-pager2-go input.pagenum{ width:28px!important; height:17px; line-height:17px; float:left!important; margin-top:2px; vertical-align:middle}
+.ui-pager2 ul li.ui-pager2-go input.go{ float:left!important;width:38px!important; height:20px; line-height:20px; border:none; margin-left:4px; display:inline; margin-top:2px; background:url(http://static.chamago.cn/resource/admin/images/ui-pager-bg-go.png) no-repeat; vertical-align:middle; cursor:pointer}

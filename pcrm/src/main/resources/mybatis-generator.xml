@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+<context id="DB2Tables" targetRuntime="MyBatis3">
+
+<commentGenerator>
+<property name="suppressAllComments" value="true" />
+	<property name="suppressDate" value="true" /></commentGenerator>
+
+<jdbcConnection driverClass="com.mysql.jdbc.Driver" 
+        connectionURL="jdbc:mysql://cmg1.chamago.com:3306/open" userId="open" password="open@cmg"/>
+
+<javaTypeResolver>
+	<property name="forceBigDecimals" value="false" /></javaTypeResolver>
+
+
+<javaModelGenerator targetPackage="com.chamacrm.mybatis" targetProject="src/test/java">
+	<property name="enableSubPackages" value="true" />
+	<property name="trimStrings" value="true" /></javaModelGenerator>
+
+<sqlMapGenerator targetPackage="com.chamacrm.mybatis" targetProject="src/test/java">
+	<property name="enableSubPackages" value="true" /></sqlMapGenerator>
+
+<javaClientGenerator type="XMLMAPPER" targetPackage="com.chamacrm.mybatis" targetProject="src/test/java">
+	<property name="enableSubPackages" value="true" /></javaClientGenerator>
+
+<table tableName="init_shell" domainObjectName="InitShell"  modelType="flat"  enableUpdateByExample="true" enableSelectByExample="true" enableCountByExample="true" enableDeleteByExample="true"/>
+</context>
+</generatorConfiguration>

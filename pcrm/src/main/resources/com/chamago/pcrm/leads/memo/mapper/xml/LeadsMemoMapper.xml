@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="LeadsMemoMapper" >
+	<resultMap type="com.chamago.pcrm.leads.memo.pojo.LeadsMemo" id="leadsMemoMap">
+		<result column="id" property="id"/>
+		<result column="buyer_nick" property="buyerNick"/>
+		<result column="seller_nick" property="sellerNick"/>
+		<result column="name" property="wangwangNick"/>
+		<result column="num_iid" property="numId"/>
+		<result column="sku_id" property="skuId"/>
+		<result column="price" property="price"/>
+		<result column="mobile" property="mobile"/>
+		<result column="email" property="email"/>
+		<result column="type" property="type"/>
+		<result column="expired_date" property="expiredDate"/>
+		<result column="status" property="status"/>	
+	</resultMap>	
+	
+	<insert id="saveLeadsMemo" parameterType="com.chamago.pcrm.leads.memo.pojo.LeadsMemo">
+		INSERT INTO leads_memo(id, buyer_nick, seller_nick, wangwang_nick, num_iid, sku_id, price, mobile, email, type, expired_date, status, create_date)
+		VALUES(#{id}, #{buyerNick}, #{sellerNick}, #{wangwangNick}, #{numId}, #{skuId}, #{price}, #{mobile}, #{email}, #{type}, #{expiredDate}, #{status}, now())
+	</insert>
+	
+	<insert id="saveLeadsMemoReminderLKP" parameterType="com.chamago.pcrm.leads.memo.pojo.LeadsMemoReminderLKP">
+		INSERT INTO leads_memo_reminder_lkp(id, l_id, r_id) VALUES(#{id}, #{lid}, #{rid})
+	</insert>
+	
+	<update id="updateLeadsMemo" parameterType="com.chamago.pcrm.leads.memo.pojo.LeadsMemoReminderLKP">
+		UPDATE leads_memo SET num_iid=#{numId}, sku_id=#{skuId}, price=#{price}, mobile=#{mobile}, email=#{email}, type=#{type}, expired_date=#{expiredDate}, modify_date=now() 
+		WHERE id=#{id}
+	</update>
+	
+	<select id="getReminderIdByLeadsMemoId" parameterType="string" resultType="string">
+		SELECT r_id from leads_memo_reminder_lkp where l_id = #{lid}
+	</select>
+		
+	<select id="getLeadsMemoByParam" parameterType="map" resultMap="leadsMemoMap">
+		SELECT l.id, l.buyer_nick, l.seller_nick, s.name, l.num_iid, l.sku_id, l.expired_date, l.status, l.type FROM leads_memo l
+		LEFT JOIN SYUSER s ON s.ID = l.wangwang_nick
+		WHERE l.status = #{status} AND l.buyer_nick = #{buyerNick} AND l.seller_nick=#{sellerNick} ORDER BY l.expired_date LIMIT #{start}, #{end}
+	</select>
+	
+	<select id="getLeadsMemoCountByParam" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM leads_memo WHERE status = #{status} AND buyer_nick = #{buyerNick} AND seller_nick=#{sellerNick}
+	</select>
+	
+	<select id="getLeadsMemoById" parameterType="string" resultMap="leadsMemoMap">
+		SELECT id, buyer_nick, seller_nick, wangwang_nick, num_iid, sku_id, price, mobile, email, type, expired_date, status FROM leads_memo
+		WHERE id=#{id}
+	</select>
+	
+	<update id="updateStatus" parameterType="map">
+		UPDATE leads_memo SET status=#{status} WHERE id=#{id}
+	</update>
+	
+	<select id="getLeadsMemoCountByStatus" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM leads_memo WHERE buyer_nick=#{buyerNick} AND seller_nick=#{sellerNick} AND status=#{status}
+	</select>
+</mapper>

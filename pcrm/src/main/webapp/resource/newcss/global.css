@@ -1,0 +1,128 @@
+@charset "utf-8";
+/**********************
+  重置样式文件  		   
+ 	 1.覆盖默认样式	   
+	 2.添加公用/常用样式
+*********************/
+/*+++++++++++++++++++++++++++++++++++++ @ 重置样式 +++++++++++++++++++++++++++++*/
+	body{font-size:12px; font-family:"微软雅黑", arial; color:#333;}  
+	body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {padding: 0;margin: 0; }
+	button{ text-align:center;}
+	textarea,input{	word-wrap:break-word;word-break:break-all;}
+	li{list-style-type:none;}
+	img{border:0 none; cursor:pointer;}
+	table {border-collapse:0;border-spacing: 0; font-size:12px;} 
+	a{outline: none;}
+	
+	h1,h2,h3,h4,h5,h6 {font-weight: normal;font-size: 100%; }
+	q:before,q:after {content:'';} 
+	caption,th {text-align: left;} 
+	abbr,acronym { border: 0;}
+	.clear{clear:both; height:0px; width:100%; font-size:0; line-height:0px; visibility:hidden; overflow:hidden;}
+	.clearfix:after{clear: both;content: ".";display: block;height: 0;visibility: hidden;}
+/*+++++++++++++++++++++++++++++++ @end_重置样式+++++++++++++++++++++++++++++++++*/
+
+
+/*++++++++++++++++++++++++++++++++ @group 便捷样式定义 ++++++++++++++++++++++++++++++++*/
+	/* 鼠标样式 */
+	.pointer{cursor:pointer;}
+	/* 取消边框 */
+	.noBorder{border:0 none;}
+	/*  文本对齐方式  */
+	.t-l{text-align:left;}
+	.t-c{text-align:center;}
+	.t-r{text-align:right;}
+     /*
+	 * 字母和单词换行设置
+	 * @class Break 强制内容换行
+	 * @class Nobreak 强制内容不换行
+	 */
+	.Break{word-break:break-all;word-wrap:break-word;}
+	.Nobreak{word-break:keep-all;word-wrap:normal;}
+
+	/* 浮动定义   */
+	.FL{float:left;}
+	.FR{float:right;}
+	
+	/* 定义文本下划线  */
+	.unLine{text-decoration:underline;}
+	a.disunLine{text-decoration:none;}
+	
+	/*    定位关系     */
+	.absolute{position:absolute;}
+	.relative{position:relative;}
+	/* 通用容器 */
+	.wrapper{
+		clear: both;
+		overflow: hidden;
+	}
+    /*
+	 * 隐藏元素
+	 * @class o-hidden
+	 * @desc 当元素内容内容超出元素height 或 width 时，隐藏之
+	 */
+	.o-hidden{overflow:hidden;}
+	/*
+	 * 隐藏元素
+	 * @class invisible
+	 * @desc	visibility可以隐藏元素，但是还是会在布局中占位
+	 */
+	.invisible{
+		visibility:hidden;
+	}
+	
+	/*
+	 * 从页面布局上隐藏元素
+	 * @class hidden
+	 * @desc	从布局上隐藏元素
+	 */
+	.hidden{
+		display: none;
+	}
+	.block {display:block;}
+	/*
+	 * 清理元素
+	 * @class clear
+	 * @desc	清理浮动元素,当浮动换行时后面元素不希望浮动，添加此属性，防止IE BUG
+	 */
+ 	
+/*+++++++++++++++++++++++++++++++++++++ @end便捷样式定义 ++++++++++++++++++++++++++++++++++++++++++*/ 
+
+/*+++++++++++++++++++++++++++++++++++++++ 常用样式定义 ++++++++++++++++++++++++++++++++++++++++++++++++*/
+	 /*
+	 * 颜色功能定义
+	 * @Pro 由小写C开头,表示color
+	 * @desc 常用样式可更具一个项目的样式使用频率重新定义,扩展
+	 */
+	.cRed{color: #F00;}.cWhite{color: #FFF;}.cGreen{color:#afda30;}.cGray{color: #666;}.cBlue{ color: #00F;}.cblack{ color:#000;}
+	
+	/*  定义某个项目常用颜色  */
+	 
+	/*
+	 * 定义字体样式
+	 * @Pro 由大写字母F开头,表示FONT
+	 * @desc 常用样式可更具一个项目的样式使用频率重新定义,扩展
+	 */
+	
+	/*  字体样式 */
+	.FB{font-weight:bold;}.FN{ font-weight:normal;}.FI{font-style:italic;}
+	/*  字体大小  */
+	.F10{font-size:10px;}.F11{font-size:11px;}.F12{font-size:12px;}.F13{font-size:13px;}.F14{font-size:14px;}.F16{font-size:16px;}.F18{font-size:18px;}
+	/*
+	 * 定义间距,上下2个DIV间距
+	 * @Pro 使用DIVH开头.
+	 * @desc 上下DIV有间距时使用,尽量不使用margin/padding值,防止不同浏览器出现BUG,
+	 *	使用下面属性可兼容大多浏览器.
+	 */
+	.DivH1,DivH3,.DivH5,.DivH7,.DivH8,.DivH10,.DivH15,.DivH20,.DivH25,.DivH30,DivH1,.DivH40,.DivH50,DivH60,DivH100{width:100%;overflow:hidden;clear:both; height:0px; }
+	.DivH1{height:1px;}.DivH3{height:3px;}.DivH5{height:5px;}.DivH7{height:7px;}.DivH8{height:8px;}.DivH10{height:10px;}.DivH15{height:15px;}
+	.DivH20{height:20px;}.DivH25{height:25px;}.DivH30{height:30px;}.DivH40{height:40px;}.DivH50{height:50px;}.DivH60{height:60px;}.DivH100{height:100px;}
+	 /*行缩进*/
+	.TE5{text-indent:5px;}.TE10{ text-indent:10px;}.TE15{text-indent:15px}.TE20{text-indent:20px}.TE24{text-indent:24px}.TE25{text-indent:25px}
+	
+	.MRT10{ margin-top:10px;}
+	.MRB10{ margin-top:10px;}
+	.MRL10{ margin-top:10px;}
+	.MRR10{ margin-top:10px;}
+	.MR10{ margin:10px;}
+/*+++++++++++++++++++++++++++++++++++++++@end++++++++++++++++++++++++++++++++++++++++*/
