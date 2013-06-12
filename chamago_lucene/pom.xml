@@ -1,0 +1,37 @@
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.chamago</groupId>
+	<artifactId>chamago_lucene</artifactId>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<parent>
+		<groupId>com.chamago</groupId>
+		<artifactId>pcrmparent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pcrmparent/pom.xml</relativePath>
+	</parent>
+	<dependencies>
+		
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-analyzers</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>fakepath</groupId>
+			<artifactId>IKAnalyzer</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+
+		
+	</dependencies>
+</project>

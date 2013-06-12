@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="target/classes" path="src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources"/>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.6.0_32"/>
+	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry kind="lib" path="target/lib/chamago.jar"/>
+	<classpathentry kind="lib" path="target/lib/hamcrest-core-1.1.jar"/>
+	<classpathentry kind="lib" path="target/lib/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="target/lib/mysql-connector-java-5.1.18.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

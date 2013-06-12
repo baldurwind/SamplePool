@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+
+	<appender name="itemLogger" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/chamago/pcrm/logs/item.log" />
+		<param name="Append" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="WARN" />
+			<param name="LevelMax" value="ERROR" />
+		</filter>
+	</appender>
+	<appender name="tradeLogger" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/chamago/pcrm/logs/trade.log" />
+		<param name="Append" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="WARN" />
+			<param name="LevelMax" value="ERROR" />
+		</filter>
+	</appender>
+	<appender name="behaviorLogger" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/chamago/pcrm/logs/behavior.log" />
+		<param name="Append" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="WARN" />
+			<param name="LevelMax" value="ERROR" />
+		</filter>
+	</appender>
+
+	<appender name="marketingLogger" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/chamago/pcrm/logs/marketing.log" />
+		<param name="Append" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="WARN" />
+			<param name="LevelMax" value="ERROR" />
+		</filter>
+	</appender>
+
+	<logger name="item">
+		<appender-ref ref="itemLogger" />
+	</logger>
+	<logger name="trade">
+		<appender-ref ref="tradeLogger" />
+	</logger>
+	<logger name="marketing">
+		<appender-ref ref="marketingLogger" />
+	</logger>
+	<logger name="behavior">
+		<appender-ref ref="behaviorLogger" />
+	</logger>
+
+</log4j:configuration>

@@ -1,0 +1,3 @@
+此项目以jar包的方式放入到kettle/libext下，供acookie模块的job调用，主要处理一些字典数据的匹配
+
+IP库文件:qqwry.dat 根据pom文件里的目录解压到相关路径
