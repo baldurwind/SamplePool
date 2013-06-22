@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
+    xmlns:t="http://tuscany.apache.org/xmlns/sca/1.0"
+	xmlns:c="http://tbservice"
+    xmlns:s="http://tbclient"
+    targetNamespace="http://tbclient"
+    name="tbclient">
+
+
+
+	<component name="TBClientComponent">
+		<implementation.java class="client.TBClientImpl"/>
+        <service name="TBClient">
+			<binding.ws uri="http://localhost:8081/TBClient"/>
+		</service>
+		<reference name="tbService">
+			<interface.java interface="service.TBService" />
+			<binding.ws uri="http://localhost:8080/TBService" />
+		</reference>
+	</component>
+</composite>
