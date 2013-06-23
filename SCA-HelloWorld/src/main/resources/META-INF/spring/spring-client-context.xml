@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:sca="http://www.springframework.org/schema/sca"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/sca http://www.osoa.org/xmlns/sca/1.0/spring-sca.xsd">
+       
+    <sca:service name="springClientRef" type="com.spring.client.SpringClient" target="springClient"/>
+    <bean id="springClient" class="com.spring.client.SpringClientImpl">
+    <property name="springService" ref="springService"/>
+    </bean>
+    
+    <sca:reference name="springService" type="com.spring.service.SpringService"/>
+    
+   <!-- 
+    <bean id="applicationContextProvider" class="bigbank.stockquote.server.SCAApplicationContextProvider"/>
+    -->
+</beans>

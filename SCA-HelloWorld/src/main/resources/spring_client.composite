@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
+    xmlns:t="http://tuscany.apache.org/xmlns/sca/1.0"
+	xmlns:c="http://springservice"
+    xmlns:s="http://springclient"
+    targetNamespace="http://springclient"
+    name="springclient">
+
+
+
+		
+    <service name="SpringClient" promote="SpringClientComponent">
+        <binding.ws uri="http://localhost:8080/spring/client"/>
+        <interface.java interface="com.spring.client.SpringClient"/>
+       
+    </service>
+
+    <component name="SpringClientComponent">
+        <implementation.spring location="META-INF/spring/spring-client-context.xml"/>
+          <reference name="springService">
+         <interface.java interface="com.spring.service.SpringService" />
+				<binding.ws uri="http://localhost:8081/spring/service" />
+		</reference>
+    </component>
+</composite>

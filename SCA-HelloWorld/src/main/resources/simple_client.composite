@@ -9,13 +9,14 @@
 
 
 	<component name="TBClientComponent">
-		<implementation.java class="client.TBClientImpl"/>
+		<implementation.java class="com.simple.client.TBClientImpl"/>
         <service name="TBClient">
 			<binding.ws uri="http://localhost:8081/TBClient"/>
 		</service>
 		<reference name="tbService">
-			<interface.java interface="service.TBService" />
+			<interface.java interface="com.simple.service.TBService" />
 			<binding.ws uri="http://localhost:8080/TBService" />
 		</reference>
+		<property name="region">Shanghai</property>
 	</component>
 </composite>

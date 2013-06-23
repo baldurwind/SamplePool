@@ -1,4 +1,4 @@
-package service;
+package com.simple.service;
 
 
 import org.apache.tuscany.sca.node.SCANode;
@@ -15,7 +15,7 @@ public class ServiceLauncher {
 	        
 
 	        SCANodeFactory factory = SCANodeFactory.newInstance();
-	        SCANode node = factory.createSCANodeFromClassLoader("service.composite", TBService.class.getClassLoader());
+	        SCANode node = factory.createSCANodeFromClassLoader("simple_service.composite", TBService.class.getClassLoader());
 	        node.start();
 	        
 	        // Method 1: To access the Spring Application Context instance

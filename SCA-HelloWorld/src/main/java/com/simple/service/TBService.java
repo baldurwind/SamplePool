@@ -1,4 +1,4 @@
-package service;
+package com.simple.service;
 
 import org.osoa.sca.annotations.Remotable;
 

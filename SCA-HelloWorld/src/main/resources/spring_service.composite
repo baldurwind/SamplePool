@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<composite xmlns="http://www.osoa.org/xmlns/sca/1.0"
+    xmlns:t="http://tuscany.apache.org/xmlns/sca/1.0"
+    xmlns:c="http://springservice"
+    targetNamespace="http://springservice"
+    name="springservice">
+	
+	
+    <service name="springService" promote="SpringServiceComponent">
+        <interface.java interface="com.spring.service.SpringService"/>
+        <binding.ws uri="http://localhost:8081/spring/service"/>
+    </service>
+
+    <component name="SpringServiceComponent">
+        <implementation.spring location="META-INF/spring/spring-service-context.xml"/>
+    </component>
+	
+</composite>

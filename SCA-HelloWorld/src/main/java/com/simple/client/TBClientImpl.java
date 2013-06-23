@@ -1,13 +1,18 @@
-package client;
+package com.simple.client;
 
 import org.apache.tuscany.sca.data.collection.Collection;
 import org.apache.tuscany.sca.node.SCAClient;
 import org.apache.tuscany.sca.node.SCANode;
 import org.apache.tuscany.sca.node.SCANodeFactory;
+import org.osoa.sca.annotations.Constructor;
+import org.osoa.sca.annotations.Destroy;
+import org.osoa.sca.annotations.Init;
+import org.osoa.sca.annotations.Property;
 import org.osoa.sca.annotations.Reference;
 import org.osoa.sca.annotations.Service;
 
-import service.TBService;
+import com.simple.service.TBService;
+
 
 
 @Service(TBClient.class)
@@ -17,7 +22,27 @@ public class TBClientImpl implements TBClient {
 	private TBService tbService;
 	
 	
+	private String region;
 	
+	private String zipCode;
+	
+	
+	
+	@Init
+	public void init(){
+		System.out.println("init..");
+	}
+	
+	
+	@Destroy
+	public void destory(){
+		System.out.println("destory..");
+	}
+	@Property
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
 	public TBService getTbService() {
 		return tbService;
 	}
@@ -28,7 +53,7 @@ public class TBClientImpl implements TBClient {
 	}
 
 	public void execute(String name){
-		System.out.println("ClientSide:"+tbService);
+		System.out.println("ZipCode:"+zipCode+"Region:"+region+",ClientSide:"+tbService);
 		tbService.display(name+": invoked by client");
 	}
 	

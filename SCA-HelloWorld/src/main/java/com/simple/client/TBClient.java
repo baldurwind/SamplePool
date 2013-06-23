@@ -1,4 +1,4 @@
-package client;
+package com.simple.client;
 
 import org.osoa.sca.annotations.Remotable;
 
